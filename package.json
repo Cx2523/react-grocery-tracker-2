@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "semantic-ui-react": "^0.68.5",
     "webpack": "^2.4.1"
   },
   "devDependencies": {
