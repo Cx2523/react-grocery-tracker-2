@@ -1,9 +1,9 @@
 import React from 'react';
 import NewItemInput from './NewItemInput';
 
-const ItemsContainer = () => {
+const ItemsContainer = (props) => {
   return (
-    <NewItemInput />
+    <NewItemInput createNewItem={props.createNewItem}/>
   );
 }
 
