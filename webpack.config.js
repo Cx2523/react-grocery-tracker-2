@@ -58,13 +58,8 @@ module.exports = {
       {
         test: /\.js$/,
         include: path.join(__dirname, 'src'),
-        loaders: ['babel']
+        loaders: ['babel-loader']
       },
-      // {
-      //   test: /\.js$/,
-      //   exclude: /node_modules/,
-      //   use: 'babel-loader'
-      // },
       {
         test: /\.scss$/,
         use: cssConfig
