@@ -57,9 +57,14 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
-        use: 'babel-loader'
+        include: path.join(__dirname, 'src'),
+        loaders: ['babel']
       },
+      // {
+      //   test: /\.js$/,
+      //   exclude: /node_modules/,
+      //   use: 'babel-loader'
+      // },
       {
         test: /\.scss$/,
         use: cssConfig
