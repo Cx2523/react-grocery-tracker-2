@@ -1,9 +1,13 @@
 import React from 'react';
 import NewItemInput from './NewItemInput';
+import ItemsList from './ItemsList.js';
 
 const ItemsContainer = (props) => {
   return (
-    <NewItemInput createNewItem={props.createNewItem}/>
+    <div>
+      <NewItemInput createNewItem={props.createNewItem}/>
+      <ItemsList items={props.items}/>
+    </div>
   );
 }
 

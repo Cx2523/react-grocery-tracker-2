@@ -36,7 +36,6 @@ class NewItemInput extends React.Component {
   }
 
   clearInput(event){
-    console.log('clearInput');
     this.setState({item:{
       name: '',
       cost: '',

@@ -22,7 +22,7 @@ class App extends React.Component {
 
   render(){
     return(
-      <ItemsContainer createNewItem={this.createNewItem} />
+      <ItemsContainer items={this.state.items} createNewItem={this.createNewItem} />
     );
   }
 }
