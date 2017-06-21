@@ -1,7 +1,11 @@
 import React from 'react';
+import ItemsContainer from './Items/ItemsContainer.js';
 
-const ListItemPage = () => {
-  return (<h1>AboutPage</h1>);
+const ListItemPage = (props) => {
+  console.log(props);
+  return (
+    <ItemsContainer items={props.stateData.items} createNewItem={props.createNewItem} />
+  );
 }
 
 export default ListItemPage;
