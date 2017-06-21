@@ -15,8 +15,6 @@ describe('NewItemInput', function(){
   it('should contain 2 buttons', function(){
     expect(buttons.length).to.equal(2);
   });
-  it('local state should clear on submit', function(){
-
-  });
+  it('local state should clear on submit');
   it('local state should clear on clear');
 });

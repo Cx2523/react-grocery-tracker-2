@@ -10,7 +10,6 @@ describe('ItemList',function(){
     const wrapper = shallow(<ItemsList items={intialItemsList} />);
     expect(wrapper.nodes.length).to.equal(1);
     expect(wrapper.nodes[0].type).to.equal('h1');
-
   });
   it('should render an Item component for every entry in items', function(){
     const testItemsList = [{
