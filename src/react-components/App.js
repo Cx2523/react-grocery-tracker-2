@@ -8,7 +8,7 @@ class App extends React.Component {
     super();
     this.state={
       items: [],
-      lists: {},
+      lists: [],
       stats: {}
     };
     this.createNewItem = this.createNewItem.bind(this);

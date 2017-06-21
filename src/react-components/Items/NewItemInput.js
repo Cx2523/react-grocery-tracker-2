@@ -14,6 +14,7 @@ class NewItemInput extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.clearInput = this.clearInput.bind(this);
   }
 
   handleChange(event){
@@ -25,24 +26,60 @@ class NewItemInput extends React.Component {
 
   handleSubmit(event){
     event.preventDefault();
-    this.props.createNewItem(this.state.item);
+    const item = Object.assign({} , this.state.item); //copy item before input clear
+    this.setState({item:{
+      name: '',
+      cost: '',
+      desc: ''
+    }});
+    this.props.createNewItem(item);
+  }
+
+  clearInput(event){
+    console.log('clearInput');
+    this.setState({item:{
+      name: '',
+      cost: '',
+      desc: ''
+    }});
+    event.preventDefault();
   }
 
   render(){
     return(
-      <form onSubmit={this.handleSubmit} className="ui form">
-        <div className="field">
-          <input name="name"onChange={this.handleChange} type="text" placeholder="Item Name" />
-        </div>
-        <div className="field">
-          <input name="cost" onChange={this.handleChange} type="text" placeholder="Cost Per Unit" />
-        </div>
-        <div className="field">
-          <input name="desc" onChange={this.handleChange} type="text" placeholder="Description" />
-        </div>
-        <button className="ui button">Submit</button>
-        <button className="ui button">Clear</button>
-      </form>
+      <div>
+        <form  className="ui form">
+          <div className="field">
+            <input
+              name="name"
+              onChange={this.handleChange}
+              type="text"
+              placeholder="Item Name"
+              value={this.state.item.name}
+            />
+          </div>
+          <div className="field">
+            <input
+              name="cost"
+              onChange={this.handleChange}
+              type="text"
+              placeholder="Cost Per Unit"
+              value={this.state.item.cost}
+            />
+          </div>
+          <div className="field">
+            <input
+              name="desc"
+              onChange={this.handleChange}
+              type="text"
+              placeholder="Description"
+              value={this.state.item.desc}
+            />
+          </div>
+          <button onClick={this.handleSubmit} className="ui basic green button">Submit</button>
+          <button onClick={this.clearInput} className="ui basic red button">Clear</button>
+        </form>
+      </div>
     );
   }
 }

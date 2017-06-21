@@ -10,10 +10,10 @@ describe('App initialization',function(){
   });
   describe('renders with state containing', function(){
     it('An empty item object',function(){
-      expect(wrapper.state().items).to.be.a('object').and.to.be.empty;
+      expect(wrapper.state().items).to.be.a('array').and.to.be.empty;
     });
     it('An empty list object',function(){
-      expect(wrapper.state().lists).to.be.a('object').and.to.be.empty;
+      expect(wrapper.state().lists).to.be.a('array').and.to.be.empty;
     });
     it('An empty stats object',function(){
       expect(wrapper.state().stats).to.be.a('object').and.to.be.empty;
