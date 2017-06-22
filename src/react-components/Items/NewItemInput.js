@@ -47,6 +47,7 @@ class NewItemInput extends React.Component {
   render(){
     return(
       <div>
+        <h2>Manage Items</h2>
         <form  className="ui form">
           <div className="field">
             <input

@@ -21,6 +21,18 @@ class App extends React.Component {
     this.createNewItem = this.createNewItem.bind(this);
   }
 
+  componentDidMount(){
+    if(Object.keys(localStorage).some((key) => key === 'reactGroceryTrackerData')){
+      console.log("A saved state exists");
+      const savedState = JSON.parse(localStorage.reactGroceryTrackerData);
+      this.setState(savedState);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    localStorage.setItem('reactGroceryTrackerData', JSON.stringify(this.state));
+  }
+
   createNewItem(item){
     const newItemSet = this.state.items.map((item) => item);
     newItemSet.push(item);
