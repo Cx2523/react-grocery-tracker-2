@@ -8,6 +8,7 @@ import {
 import ListItemPage from './ListItemPage.js';
 import StatsPage from './StatsPage.js';
 import AboutPage from './AboutPage.js';
+import Navbar from './Navbar.js';
 
 class App extends React.Component {
   constructor(){
@@ -30,14 +31,17 @@ class App extends React.Component {
     return(
       <Router>
         <div>
-          <Route exact path="/"
-            render={() => <ListItemPage
-              stateData={this.state}
-              createNewItem={this.createNewItem}
-              />}
-            />
-          <Route path="/stats" component={StatsPage} />
-          <Route path="/about" component={AboutPage} />
+          <Navbar />
+          <div>
+            <Route exact path="/"
+              render={() => <ListItemPage
+                stateData={this.state}
+                createNewItem={this.createNewItem}
+                />}
+              />
+            <Route path="/stats" component={StatsPage} />
+            <Route path="/about" component={AboutPage} />
+          </div>
         </div>
       </Router>
     );
