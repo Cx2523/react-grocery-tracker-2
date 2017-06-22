@@ -12,7 +12,7 @@ class Navbar extends React.Component{
   }
 
   handleClick(event, { name }){
-      this.setState({activePage: name})
+    this.setState({activePage: name})
   }
 
   render(){
@@ -23,7 +23,6 @@ class Navbar extends React.Component{
           <Icon name='edit' />
           Lists
         </Menu.Item>
-
 
         <Menu.Item as={Link} to={'/stats'} name='stats' active={activePage === 'stats'} onClick={this.handleClick}>
           <Icon name='line chart' />

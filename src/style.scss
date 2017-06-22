@@ -1,0 +1,21 @@
+.item-card{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .item-info{
+    display:flex;
+    justify-content: space-around;
+    align-items: baseline;
+    width:40%;
+  }
+  .item-control{
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 40%;
+  }
+}
+
+.item-list{
+  margin-top: 5%;
+}

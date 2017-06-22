@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Button, Form } from 'semantic-ui-react';
+import { Segment, Button, Form, Input, Header } from 'semantic-ui-react';
 
 class NewItemInput extends React.Component {
   constructor(){
@@ -46,11 +46,11 @@ class NewItemInput extends React.Component {
 
   render(){
     return(
-      <div>
-        <h2>Manage Items</h2>
+      <Segment raised>
+        <Header as='h1'>Manage Items</Header>
         <form  className="ui form">
-          <div className="field">
-            <input
+          <div className="field" required>
+            <Input
               name="name"
               onChange={this.handleChange}
               type="text"
@@ -59,7 +59,8 @@ class NewItemInput extends React.Component {
             />
           </div>
           <div className="field">
-            <input
+            <Input
+              label="$"
               name="cost"
               onChange={this.handleChange}
               type="text"
@@ -68,7 +69,7 @@ class NewItemInput extends React.Component {
             />
           </div>
           <div className="field">
-            <input
+            <Input
               name="desc"
               onChange={this.handleChange}
               type="text"
@@ -79,7 +80,7 @@ class NewItemInput extends React.Component {
           <button onClick={this.handleSubmit} className="ui basic green button">Submit</button>
           <button onClick={this.clearInput} className="ui basic red button">Clear</button>
         </form>
-      </div>
+      </Segment>
     );
   }
 }
