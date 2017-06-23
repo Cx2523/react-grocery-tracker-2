@@ -15,6 +15,8 @@ const ItemsContainer = (props) => {
         items={props.items}
         getItemById={props.getItemById}
         deleteItem={props.deleteItem}
+        editItem={props.editItem}
+        clearInput={props.clearInput}
       />
     </div>
   );
