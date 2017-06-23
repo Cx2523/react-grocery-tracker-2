@@ -45,6 +45,7 @@ class NewItemInput extends React.Component {
   }
 
   render(){
+
     return(
       <Segment raised>
         <Header as='h1'>Manage Items</Header>

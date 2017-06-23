@@ -6,7 +6,7 @@ const ListItemPage = (props) => {
   return (
     <Grid columns={2} divided padded>
       <Grid.Column>
-        <ItemsContainer items={props.stateData.items} createNewItem={props.createNewItem} />
+        <ItemsContainer editItem={props.stateData.editItem} getItemById={props.getItemById} items={props.stateData.items} createNewItem={props.createNewItem} />
       </Grid.Column>
       <Grid.Column>
         <h1>Shopping List</h1>

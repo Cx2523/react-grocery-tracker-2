@@ -16,9 +16,12 @@ class App extends React.Component {
     this.state={
       items: [],
       lists: [],
-      stats: {}
+      stats: {},
+      idCounter: 1,
+      editItem: {}
     };
     this.createNewItem = this.createNewItem.bind(this);
+    this.getItemById = this.getItemById.bind(this);
   }
 
   componentDidMount(){
@@ -35,8 +38,18 @@ class App extends React.Component {
 
   createNewItem(item){
     const newItemSet = this.state.items.map((item) => item);
+    item.id = this.state.idCounter;
+    this.state.idCounter++;
     newItemSet.push(item);
     this.setState({items: newItemSet});
+  }
+
+  getItemById(id){
+    //find item by id on state
+    this.setState(this.state.items.find((item) => {
+        return item.id === id;
+      })
+    )
   }
 
   render(){
@@ -49,6 +62,8 @@ class App extends React.Component {
               render={() => <ListItemPage
                 stateData={this.state}
                 createNewItem={this.createNewItem}
+                getItemById={this.getItemById}
+                editItem={this.state.editItem}
                 />}
               />
             <Route path="/stats" component={StatsPage} />
