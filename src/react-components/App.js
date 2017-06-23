@@ -18,10 +18,11 @@ class App extends React.Component {
       lists: [],
       stats: {},
       idCounter: 1,
-      editItem: {}
+      currentItem: {}
     };
     this.createNewItem = this.createNewItem.bind(this);
     this.getItemById = this.getItemById.bind(this);
+    this.updateExistingItem = this.updateExistingItem.bind(this);
   }
 
   componentDidMount(){
@@ -44,12 +45,25 @@ class App extends React.Component {
     this.setState({items: newItemSet});
   }
 
+  updateExistingItem(updatedItem){
+    //create a new array with updated item.
+    let newItemSet = this.state.items.map((item) => {
+      if (updatedItem.id === item.id) {
+        return updatedItem;
+      } else {
+        return item;
+      }
+    });
+
+    this.setState({items: newItemSet})
+  }
+
   getItemById(id){
     //find item by id on state
-    this.setState(this.state.items.find((item) => {
+    let item = this.state.items.find((item) => {
         return item.id === id;
-      })
-    )
+    });
+    this.setState({currentItem: Object.assign({}, item)});
   }
 
   render(){
@@ -63,7 +77,8 @@ class App extends React.Component {
                 stateData={this.state}
                 createNewItem={this.createNewItem}
                 getItemById={this.getItemById}
-                editItem={this.state.editItem}
+                editItem={this.state.currentItem}
+                updateExistingItem={this.updateExistingItem}
                 />}
               />
             <Route path="/stats" component={StatsPage} />

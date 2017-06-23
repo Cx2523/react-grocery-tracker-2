@@ -9,12 +9,17 @@ class NewItemInput extends React.Component {
       item: {
         name: '',
         cost: '',
-        desc: ''
+        desc: '',
+        id: ''
       }
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.clearInput = this.clearInput.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({item: Object.assign({}, nextProps.editItem)});
   }
 
   handleChange(event){
@@ -27,25 +32,30 @@ class NewItemInput extends React.Component {
   handleSubmit(event){
     event.preventDefault();
     const item = Object.assign({} , this.state.item); //copy item before input clear
-    this.setState({item:{
+    this.setState({item: Object.assign({}, {
       name: '',
       cost: '',
-      desc: ''
-    }});
-    this.props.createNewItem(item);
+      desc: '',
+      id: ''
+    })});
+    if (item.id !== '') {
+      this.props.updateExistingItem(item)
+    } else {
+      this.props.createNewItem(item);
+    }
   }
 
   clearInput(event){
-    this.setState({item:{
+    this.setState({item: Object.assign({}, {
       name: '',
       cost: '',
-      desc: ''
-    }});
+      desc: '',
+      id: ''
+    })});
     event.preventDefault();
   }
 
   render(){
-
     return(
       <Segment raised>
         <Header as='h1'>Manage Items</Header>
