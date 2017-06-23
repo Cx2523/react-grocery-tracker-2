@@ -12,6 +12,8 @@ const ListItemPage = (props) => {
           items={props.stateData.items}
           createNewItem={props.createNewItem}
           updateExistingItem={props.updateExistingItem}
+          deleteItem={props.deleteItem}
+          clearInput={props.clearInput}
         />
       </Grid.Column>
       <Grid.Column>

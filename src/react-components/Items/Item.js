@@ -5,6 +5,9 @@ const Item = (props) => {
   const getItemById = () => {
     props.getItemById(props.item.id);
   }
+  const deleteItem = () => {
+    props.deleteItem(props.item.id);
+  }
 
   return (
     <Segment raised>
@@ -15,8 +18,8 @@ const Item = (props) => {
         </div>
         <div className="item-control">
           <Icon color="green" size="big" name="plus" />
-          <Icon onClick={getItemById} color="blue" size="big" name="setting" />
-          <Icon color="red" size="big" name="remove" />
+          <Icon onClick={getItemById} size="big" name="setting" />
+          <Icon onClick={deleteItem} color="red" size="big" name="remove" />
         </div>
       </div>
     </Segment>

@@ -9,8 +9,13 @@ const ItemsContainer = (props) => {
         editItem={props.editItem}
         createNewItem={props.createNewItem}
         updateExistingItem={props.updateExistingItem}
+        clearInput={props.clearInput}
       />
-      <ItemsList items={props.items} getItemById={props.getItemById}/>
+      <ItemsList
+        items={props.items}
+        getItemById={props.getItemById}
+        deleteItem={props.deleteItem}
+      />
     </div>
   );
 }

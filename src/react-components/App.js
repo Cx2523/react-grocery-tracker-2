@@ -18,11 +18,18 @@ class App extends React.Component {
       lists: [],
       stats: {},
       idCounter: 1,
-      currentItem: {}
+      currentItem: {
+        name: '',
+        cost: '',
+        desc: '',
+        id: ''
+      }
     };
     this.createNewItem = this.createNewItem.bind(this);
     this.getItemById = this.getItemById.bind(this);
     this.updateExistingItem = this.updateExistingItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
+    this.clearInput = this.clearInput.bind(this);
   }
 
   componentDidMount(){
@@ -54,8 +61,12 @@ class App extends React.Component {
         return item;
       }
     });
-
-    this.setState({items: newItemSet})
+    this.setState({items: newItemSet, currentItem: Object.assign({}, {
+      name: '',
+      cost: '',
+      desc: '',
+      id: ''
+    })});
   }
 
   getItemById(id){
@@ -64,6 +75,27 @@ class App extends React.Component {
         return item.id === id;
     });
     this.setState({currentItem: Object.assign({}, item)});
+  }
+
+  deleteItem(id){
+    let modifiedItemList = this.state.items.filter((item) => {
+      return item.id !== id;
+    });
+    this.setState({items: modifiedItemList, currentItem: Object.assign({}, {
+      name: '',
+      cost: '',
+      desc: '',
+      id: ''
+    })});
+  }
+
+  clearInput(){
+    this.setState({currentItem: Object.assign({}, {
+      name: '',
+      cost: '',
+      desc: '',
+      id: ''
+    })});
   }
 
   render(){
@@ -79,6 +111,8 @@ class App extends React.Component {
                 getItemById={this.getItemById}
                 editItem={this.state.currentItem}
                 updateExistingItem={this.updateExistingItem}
+                deleteItem={this.deleteItem}
+                clearInput={this.clearInput}
                 />}
               />
             <Route path="/stats" component={StatsPage} />

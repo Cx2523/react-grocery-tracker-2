@@ -11,7 +11,8 @@ class NewItemInput extends React.Component {
         cost: '',
         desc: '',
         id: ''
-      }
+      },
+      editing: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,6 +20,9 @@ class NewItemInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
+    if (nextProps.editItem.id !== ''){
+      this.setState({editing: true});
+    }
     this.setState({item: Object.assign({}, nextProps.editItem)});
   }
 
@@ -32,27 +36,18 @@ class NewItemInput extends React.Component {
   handleSubmit(event){
     event.preventDefault();
     const item = Object.assign({} , this.state.item); //copy item before input clear
-    this.setState({item: Object.assign({}, {
-      name: '',
-      cost: '',
-      desc: '',
-      id: ''
-    })});
     if (item.id !== '') {
-      this.props.updateExistingItem(item)
+      this.props.updateExistingItem(item);
+      this.setState({editing: false});
     } else {
       this.props.createNewItem(item);
     }
   }
 
   clearInput(event){
-    this.setState({item: Object.assign({}, {
-      name: '',
-      cost: '',
-      desc: '',
-      id: ''
-    })});
+    this.setState({editing: false });
     event.preventDefault();
+    this.props.clearInput();
   }
 
   render(){
@@ -77,6 +72,7 @@ class NewItemInput extends React.Component {
               type="text"
               placeholder="Cost Per Unit"
               value={this.state.item.cost}
+              className="item-input"
             />
           </div>
           <div className="field">

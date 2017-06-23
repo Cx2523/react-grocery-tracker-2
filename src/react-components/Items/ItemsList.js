@@ -7,7 +7,7 @@ const ItemsList = (props) => {
     return (
       <Segment raised className="item-list">
         <h1>Saved Items</h1>
-        { props.items.map(item => <Item key={item.id} item={item} getItemById={props.getItemById}/>) }
+        { props.items.map(item => <Item key={item.id} item={item} getItemById={props.getItemById} deleteItem={props.deleteItem}/>) }
       </Segment>
     );
   }
