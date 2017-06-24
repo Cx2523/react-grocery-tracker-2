@@ -3,6 +3,10 @@ import { Table, Segment } from 'semantic-ui-react';
 import ShoppingListRow from './ShoppingListRow.js';
 
 const ShoppingList = (props) => {
+  let sumTotal = props.currentShoppingList.reduce((accumulator, item) => {
+    return accumulator + item.cost * item.quantity;
+  }, 0);
+  console.log(sumTotal)
   return (
     <div>
       <h1>Current Shopping List</h1>
@@ -22,6 +26,16 @@ const ShoppingList = (props) => {
         <Table.Body>
           {props.currentShoppingList.map(item => <ShoppingListRow key={item.id} item={item} incrementShoppingListQuantity={props.incrementShoppingListQuantity} decrementShoppingListQuantity={props.decrementShoppingListQuantity} removeFromShoppingList={props.removeFromShoppingList} />)}
         </Table.Body>
+        <Table.Footer>
+          <Table.HeaderCell></Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
+          <Table.HeaderCell>{sumTotal}</Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
+          <Table.HeaderCell></Table.HeaderCell>
+        </Table.Footer>
       </Table>
     </div>
   );
