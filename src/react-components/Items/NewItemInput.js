@@ -22,6 +22,8 @@ class NewItemInput extends React.Component {
   componentWillReceiveProps(nextProps){
     if (nextProps.editItem.id !== ''){
       this.setState({editing: true});
+    } else {
+      this.setState({editing: false});
     }
     this.setState({item: Object.assign({}, nextProps.editItem)});
   }
