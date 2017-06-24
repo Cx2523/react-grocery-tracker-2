@@ -17,6 +17,7 @@ const ItemsContainer = (props) => {
         deleteItem={props.deleteItem}
         editItem={props.editItem}
         clearInput={props.clearInput}
+        addItemToShoppingList={props.addItemToShoppingList}
       />
     </div>
   );

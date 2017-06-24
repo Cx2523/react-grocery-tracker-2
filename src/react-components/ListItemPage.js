@@ -1,5 +1,6 @@
 import React from 'react';
 import ItemsContainer from './Items/ItemsContainer.js';
+import ShoppingListContainer from './ShoppingList/ShoppingListContainer.js';
 import { Grid } from 'semantic-ui-react';
 
 const ListItemPage = (props) => {
@@ -14,10 +15,11 @@ const ListItemPage = (props) => {
           updateExistingItem={props.updateExistingItem}
           deleteItem={props.deleteItem}
           clearInput={props.clearInput}
+          addItemToShoppingList={props.addItemToShoppingList}
         />
       </Grid.Column>
-      <Grid.Column>
-        <h1>Shopping List</h1>
+      <Grid.Column >
+        <ShoppingListContainer currentShoppingList={props.stateData.currentShoppingList} />
       </Grid.Column>
     </Grid>
   );

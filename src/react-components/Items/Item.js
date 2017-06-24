@@ -15,6 +15,7 @@ class Item extends React.Component{
     this.clearInput = this.clearInput.bind(this);
     this.getOrClear = this.getOrClear.bind(this);
     this.deleteMode = this.deleteMode.bind(this);
+    this.addItemToShoppingList = this.addItemToShoppingList.bind(this);
   }
 
   componentWillReceiveProps(nextProps){
@@ -52,6 +53,10 @@ class Item extends React.Component{
     }
   }
 
+  addItemToShoppingList(){
+    this.props.addItemToShoppingList(this.props.item.id);
+  }
+
   deleteItem(){
     this.props.deleteItem(this.props.item.id);
   }
@@ -79,13 +84,13 @@ class Item extends React.Component{
     } else if (this.state.deleting){
         deleteIcon = <Icon color="red" size="huge" name="remove circle" className={this.state.iconAnimate} />
     } else {
-      deleteIcon = <Icon inverted size="huge" name="remove" />
+        deleteIcon = <Icon style={{visibility:'hidden'}} size="huge" name="remove" />
     }
 
     if(this.state.deleting){
       deletingCheckOrEditIcon = (
-        <Container textAlign="center">
-          <h5>Are you sure you want to<br/>delete this item?</h5>
+        <Container text textAlign="center">
+          <p>Delete this item?</p>
           <button onClick={this.deleteItem} className="ui red button">Yes</button>
           <button onClick={this.deleteMode} className="ui gray button">No</button>
         </Container>
@@ -97,12 +102,12 @@ class Item extends React.Component{
     }
 
     return (
-      <Segment className={this.state.format}>
+      <Segment color={this.state.format}>
         <div className="item-card">
-          <div className="item-info">
+          <Segment onClick={this.addItemToShoppingList} className="item-info">
             <h1>{this.props.item.name}</h1>
             <h1>{this.props.item.cost}</h1>
-          </div>
+          </Segment>
           <div className="item-control">
             { deleteIcon }
             { deletingCheckOrEditIcon }

@@ -15,7 +15,7 @@ class App extends React.Component {
     super();
     this.state={
       items: [],
-      lists: [],
+      shoppingLists: [],
       stats: {},
       idCounter: 1,
       currentItem: {
@@ -23,13 +23,15 @@ class App extends React.Component {
         cost: '',
         desc: '',
         id: ''
-      }
+      },
+      currentShoppingList: []
     };
     this.createNewItem = this.createNewItem.bind(this);
     this.getItemById = this.getItemById.bind(this);
     this.updateExistingItem = this.updateExistingItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
     this.clearInput = this.clearInput.bind(this);
+    this.addItemToShoppingList = this.addItemToShoppingList.bind(this);
   }
 
   componentDidMount(){
@@ -98,6 +100,28 @@ class App extends React.Component {
     })});
   }
 
+  addItemToShoppingList(id){
+    let newItem = true;
+    let newShoppingList = this.state.currentShoppingList.map(item => {
+      if(item.id === id) {
+        newItem = false;
+        item.quantity++;
+        return Object.assign({}, item);
+      } else {
+        return item;
+      }
+    });
+
+    if(newItem) {
+      let item = this.state.items.find(item => {
+        return item.id === id;
+      });
+      item.quantity = 1;
+      newShoppingList.push(item);
+    }
+    this.setState({currentShoppingList: newShoppingList});
+  }
+
   render(){
     return(
       <Router>
@@ -113,6 +137,7 @@ class App extends React.Component {
                 updateExistingItem={this.updateExistingItem}
                 deleteItem={this.deleteItem}
                 clearInput={this.clearInput}
+                addItemToShoppingList={this.addItemToShoppingList}
                 />}
               />
             <Route path="/stats" component={StatsPage} />
