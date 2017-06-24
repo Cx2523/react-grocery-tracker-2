@@ -19,7 +19,12 @@ const ListItemPage = (props) => {
         />
       </Grid.Column>
       <Grid.Column >
-        <ShoppingListContainer currentShoppingList={props.stateData.currentShoppingList} />
+        <ShoppingListContainer
+          currentShoppingList={props.stateData.currentShoppingList}
+          incrementShoppingListQuantity={props.incrementShoppingListQuantity}
+          decrementShoppingListQuantity={props.decrementShoppingListQuantity}
+          removeFromShoppingList={props.removeFromShoppingList}
+          />
       </Grid.Column>
     </Grid>
   );

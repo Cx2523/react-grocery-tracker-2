@@ -3,7 +3,11 @@ import ShoppingList from './ShoppingList.js';
 
 const ShoppingListContainer = (props) => {
   return (
-    <ShoppingList currentShoppingList={props.currentShoppingList} />
+    <ShoppingList currentShoppingList={props.currentShoppingList}
+      incrementShoppingListQuantity={props.incrementShoppingListQuantity}
+      decrementShoppingListQuantity={props.decrementShoppingListQuantity}
+      removeFromShoppingList={props.removeFromShoppingList}
+      />
   );
 }
 

@@ -32,6 +32,9 @@ class App extends React.Component {
     this.deleteItem = this.deleteItem.bind(this);
     this.clearInput = this.clearInput.bind(this);
     this.addItemToShoppingList = this.addItemToShoppingList.bind(this);
+    this.incrementShoppingListQuantity = this.incrementShoppingListQuantity.bind(this);
+    this.decrementShoppingListQuantity = this.decrementShoppingListQuantity.bind(this);
+    this.removeFromShoppingList = this.removeFromShoppingList.bind(this);
   }
 
   componentDidMount(){
@@ -122,6 +125,39 @@ class App extends React.Component {
     this.setState({currentShoppingList: newShoppingList});
   }
 
+  incrementShoppingListQuantity(id){
+    let newShoppingList = this.state.currentShoppingList.map(item => {
+      if (item.id === id) {
+        item.quantity++;
+        return item;
+      }
+      else {
+        return item;
+      }
+    });
+    this.setState({currentShoppingList: newShoppingList});
+  }
+  decrementShoppingListQuantity(id){
+    let newShoppingList = this.state.currentShoppingList.map(item => {
+      if (item.id === id && item.quantity > 0 ) {
+        item.quantity--;
+        return item;
+      }
+      else {
+        return item;
+      }
+    });
+    this.setState({currentShoppingList: newShoppingList});
+  }
+
+  removeFromShoppingList(id){
+    let newShoppingList = this.state.currentShoppingList.filter(item => {
+      return item.id !== id;
+    });
+    this.setState({currentShoppingList: newShoppingList});
+  }
+
+
   render(){
     return(
       <Router>
@@ -138,6 +174,9 @@ class App extends React.Component {
                 deleteItem={this.deleteItem}
                 clearInput={this.clearInput}
                 addItemToShoppingList={this.addItemToShoppingList}
+                incrementShoppingListQuantity={this.incrementShoppingListQuantity}
+                decrementShoppingListQuantity={this.decrementShoppingListQuantity}
+                removeFromShoppingList={this.removeFromShoppingList}
                 />}
               />
             <Route path="/stats" component={StatsPage} />
