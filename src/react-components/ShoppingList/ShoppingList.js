@@ -6,7 +6,7 @@ const ShoppingList = (props) => {
   let sumTotal = props.currentShoppingList.reduce((accumulator, item) => {
     return accumulator + item.cost * item.quantity;
   }, 0);
-  console.log(sumTotal)
+  
   return (
     <div>
       <h1>Current Shopping List</h1>

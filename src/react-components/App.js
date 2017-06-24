@@ -35,6 +35,7 @@ class App extends React.Component {
     this.incrementShoppingListQuantity = this.incrementShoppingListQuantity.bind(this);
     this.decrementShoppingListQuantity = this.decrementShoppingListQuantity.bind(this);
     this.removeFromShoppingList = this.removeFromShoppingList.bind(this);
+    this.saveShoppingList = this.saveShoppingList.bind(this);
   }
 
   componentDidMount(){
@@ -157,6 +158,15 @@ class App extends React.Component {
     this.setState({currentShoppingList: newShoppingList});
   }
 
+  saveShoppingList(list){
+    let listObject = {
+      list: list,
+      timeStamp: new Date()
+    }
+    let newShoppingListsArray = this.state.shoppingLists.map(list => list);
+    newShoppingListsArray.push(listObject);
+    this.setState({shoppingLists: newShoppingListsArray});
+  }
 
   render(){
     return(
@@ -177,6 +187,7 @@ class App extends React.Component {
                 incrementShoppingListQuantity={this.incrementShoppingListQuantity}
                 decrementShoppingListQuantity={this.decrementShoppingListQuantity}
                 removeFromShoppingList={this.removeFromShoppingList}
+                saveShoppingList={this.saveShoppingList}
                 />}
               />
             <Route path="/stats" component={StatsPage} />

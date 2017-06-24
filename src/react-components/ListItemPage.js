@@ -24,6 +24,7 @@ const ListItemPage = (props) => {
           incrementShoppingListQuantity={props.incrementShoppingListQuantity}
           decrementShoppingListQuantity={props.decrementShoppingListQuantity}
           removeFromShoppingList={props.removeFromShoppingList}
+          saveShoppingList={props.saveShoppingList}
           />
       </Grid.Column>
     </Grid>
