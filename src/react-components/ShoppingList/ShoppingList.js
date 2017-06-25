@@ -4,9 +4,9 @@ import ShoppingListRow from './ShoppingListRow.js';
 import SaveShoppingList from './SaveShoppingList.js';
 
 const ShoppingList = (props) => {
-  let sumTotal = 0;
+  let sumTotal;
   if(props.currentShoppingList.list.length > 0) {
-    let sumTotal = props.currentShoppingList.list.reduce((accumulator, item) => {
+    sumTotal = props.currentShoppingList.list.reduce((accumulator, item) => {
       return accumulator + item.cost * item.quantity;
     }, 0);
   }

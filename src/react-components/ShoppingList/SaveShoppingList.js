@@ -1,12 +1,11 @@
 import React from 'react';
 import { Segment, Button, Input } from 'semantic-ui-react';
-// import SavedLists from './SavedLists.js';
 
 class SaveShoppingList extends React.Component{
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
-      listName: "New Shopping List"
+      listName: props.currentShoppingList.name
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -14,10 +13,13 @@ class SaveShoppingList extends React.Component{
 
   handleSubmit(){
     this.props.saveShoppingList(this.state.listName, this.props.currentShoppingList.list);
-    this.setState({listName: 'New Shopping List'});
+    this.setState({listName: props.currentShoppingList.name});
   }
   handleChange(event){
     this.setState({listName: event.target.value});
+  }
+  componentWillReceiveProps(nextProps){
+    this.setState({listName: nextProps.currentShoppingList.name});
   }
 
   render(){

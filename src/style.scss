@@ -23,3 +23,11 @@
 .item-input[type='text']{
   background-color: red;
 }
+
+.saved-list-container{
+  display:flex;
+  justify-content: space-between;
+  .saved-list-button{
+    text-align: center;
+  }
+}

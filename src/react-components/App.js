@@ -40,6 +40,7 @@ class App extends React.Component {
     this.decrementShoppingListQuantity = this.decrementShoppingListQuantity.bind(this);
     this.removeFromShoppingList = this.removeFromShoppingList.bind(this);
     this.saveShoppingList = this.saveShoppingList.bind(this);
+    this.loadList = this.loadList.bind(this);
   }
 
   componentDidMount(){
@@ -184,6 +185,10 @@ class App extends React.Component {
     this.setState({shoppingLists: newShoppingListsArray});
   }
 
+  loadList(list){
+    this.setState({currentShoppingList: Object.assign({}, list)});
+  }
+
   render(){
     return(
       <Router>
@@ -204,6 +209,7 @@ class App extends React.Component {
                 decrementShoppingListQuantity={this.decrementShoppingListQuantity}
                 removeFromShoppingList={this.removeFromShoppingList}
                 saveShoppingList={this.saveShoppingList}
+                loadList = {this.loadList}
                 />}
               />
             <Route path="/stats" component={StatsPage} />
