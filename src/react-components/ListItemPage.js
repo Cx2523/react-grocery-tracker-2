@@ -4,6 +4,7 @@ import ShoppingListContainer from './ShoppingList/ShoppingListContainer.js';
 import { Grid } from 'semantic-ui-react';
 
 const ListItemPage = (props) => {
+  
   return (
     <Grid columns={2} divided padded>
       <Grid.Column>
@@ -25,6 +26,7 @@ const ListItemPage = (props) => {
           decrementShoppingListQuantity={props.decrementShoppingListQuantity}
           removeFromShoppingList={props.removeFromShoppingList}
           saveShoppingList={props.saveShoppingList}
+          savedShoppingLists={props.stateData.shoppingLists}
           />
       </Grid.Column>
     </Grid>

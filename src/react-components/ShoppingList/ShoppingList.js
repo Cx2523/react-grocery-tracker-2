@@ -1,15 +1,19 @@
 import React from 'react';
 import { Table, Segment } from 'semantic-ui-react';
 import ShoppingListRow from './ShoppingListRow.js';
+import SaveShoppingList from './SaveShoppingList.js';
 
 const ShoppingList = (props) => {
-  let sumTotal = props.currentShoppingList.reduce((accumulator, item) => {
-    return accumulator + item.cost * item.quantity;
-  }, 0);
-  
+  let sumTotal = 0;
+  if(props.currentShoppingList.list.length > 0) {
+    let sumTotal = props.currentShoppingList.list.reduce((accumulator, item) => {
+      return accumulator + item.cost * item.quantity;
+    }, 0);
+  }
+
   return (
-    <div>
-      <h1>Current Shopping List</h1>
+    <Segment raised inverted color={'yellow'}>
+      <SaveShoppingList saveShoppingList={props.saveShoppingList} currentShoppingList={props.currentShoppingList}/>
       <Table textAlign={'center'} celled padded striped color={"blue"} inverted>
         <Table.Header>
           <Table.Row>
@@ -24,7 +28,7 @@ const ShoppingList = (props) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {props.currentShoppingList.map(item => <ShoppingListRow key={item.id} item={item} incrementShoppingListQuantity={props.incrementShoppingListQuantity} decrementShoppingListQuantity={props.decrementShoppingListQuantity} removeFromShoppingList={props.removeFromShoppingList} />)}
+          {props.currentShoppingList.list.map(item => <ShoppingListRow key={item.id} item={item} incrementShoppingListQuantity={props.incrementShoppingListQuantity} decrementShoppingListQuantity={props.decrementShoppingListQuantity} removeFromShoppingList={props.removeFromShoppingList} />)}
         </Table.Body>
         <Table.Footer>
           <Table.HeaderCell></Table.HeaderCell>
@@ -37,7 +41,7 @@ const ShoppingList = (props) => {
           <Table.HeaderCell></Table.HeaderCell>
         </Table.Footer>
       </Table>
-    </div>
+    </Segment>
   );
 }
 

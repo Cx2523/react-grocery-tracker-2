@@ -1,6 +1,6 @@
 import React from 'react';
 import ShoppingList from './ShoppingList.js';
-import ManageShoppingLists from './ManageShoppingLists.js';
+import SavedLists from './SavedLists.js';
 
 const ShoppingListContainer = (props) => {
   return (
@@ -10,12 +10,11 @@ const ShoppingListContainer = (props) => {
         incrementShoppingListQuantity={props.incrementShoppingListQuantity}
         decrementShoppingListQuantity={props.decrementShoppingListQuantity}
         removeFromShoppingList={props.removeFromShoppingList}
-        />
-      <ManageShoppingLists
         saveShoppingList={props.saveShoppingList}
-        currentShoppingList={props.currentShoppingList}
         />
+        <SavedLists savedShoppingLists={props.savedShoppingLists}/>
     </div>
+
   );
 }
 

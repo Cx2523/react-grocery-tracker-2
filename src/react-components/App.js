@@ -24,7 +24,11 @@ class App extends React.Component {
         desc: '',
         id: ''
       },
-      currentShoppingList: []
+      currentShoppingList: {
+        list: [],
+        timeStamp: '',
+        name: ''
+      }
     };
     this.createNewItem = this.createNewItem.bind(this);
     this.getItemById = this.getItemById.bind(this);
@@ -106,7 +110,7 @@ class App extends React.Component {
 
   addItemToShoppingList(id){
     let newItem = true;
-    let newShoppingList = this.state.currentShoppingList.map(item => {
+    let newShoppingList = this.state.currentShoppingList.list.map(item => {
       if(item.id === id) {
         newItem = false;
         item.quantity++;
@@ -123,11 +127,12 @@ class App extends React.Component {
       item.quantity = 1;
       newShoppingList.push(item);
     }
-    this.setState({currentShoppingList: newShoppingList});
+    this.setState({currentShoppingList : {list:  newShoppingList}});
   }
 
   incrementShoppingListQuantity(id){
-    let newShoppingList = this.state.currentShoppingList.map(item => {
+    console.log(this.state.currentShoppingList);
+    let newShoppingList = this.state.currentShoppingList.list.map(item => {
       if (item.id === id) {
         item.quantity++;
         return item;
@@ -136,10 +141,10 @@ class App extends React.Component {
         return item;
       }
     });
-    this.setState({currentShoppingList: newShoppingList});
+    this.setState({currentShoppingList: {list:  newShoppingList}});
   }
   decrementShoppingListQuantity(id){
-    let newShoppingList = this.state.currentShoppingList.map(item => {
+    let newShoppingList = this.state.currentShoppingList.list.map(item => {
       if (item.id === id && item.quantity > 0 ) {
         item.quantity--;
         return item;
@@ -148,23 +153,34 @@ class App extends React.Component {
         return item;
       }
     });
-    this.setState({currentShoppingList: newShoppingList});
+    this.setState({currentShoppingList: {list:  newShoppingList}});
   }
 
   removeFromShoppingList(id){
-    let newShoppingList = this.state.currentShoppingList.filter(item => {
+    let newShoppingList = this.state.currentShoppingList.list.filter(item => {
       return item.id !== id;
     });
-    this.setState({currentShoppingList: newShoppingList});
+    this.setState({currentShoppingList: {list:  newShoppingList}});
   }
 
-  saveShoppingList(list){
+  saveShoppingList(listName, list){
+    let newList = true;
     let listObject = {
       list: list,
-      timeStamp: new Date()
+      timeStamp: new Date(),
+      name: listName
     }
-    let newShoppingListsArray = this.state.shoppingLists.map(list => list);
-    newShoppingListsArray.push(listObject);
+    let newShoppingListsArray = this.state.shoppingLists.map(list => {
+      if (list.name === listObject.name) {
+        newList = false;
+        return listObject;
+      } else {
+        return list;
+      }
+    });
+    if(newList){
+      newShoppingListsArray.push(listObject);
+    }
     this.setState({shoppingLists: newShoppingListsArray});
   }
 
