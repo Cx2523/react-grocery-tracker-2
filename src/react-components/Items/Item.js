@@ -6,9 +6,7 @@ class Item extends React.Component{
     super();
     this.state = {
       format: 'blue',
-      iconAnimate: '',
-      editing: false,
-      deleting: false
+      iconAnimate: ''
     }
     this.getItemById = this.getItemById.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
@@ -19,38 +17,29 @@ class Item extends React.Component{
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.editItem.id === this.props.item.id){
+    if(nextProps.editItem.id === this.props.item.id && nextProps.editing){
       this.setState({
-        editing: true,
-        format: "yellow",
+        format: 'yellow',
         iconAnimate: 'loading'
       });
-    } else {
+    }
+    else if(nextProps.editItem.id === this.props.item.id && nextProps.deleting){
       this.setState({
-        editing: false,
-        format: "blue",
-        iconAnimate: '',
-        deleting: false
+        format: 'red',
+        iconAnimate: 'loading'
       });
     }
+    else {
+      this.setState({
+        format: 'blue',
+        iconAnimate: ''
+      });
+    }
+
   }
 
   deleteMode(){
-    if(this.state.deleting){
-      this.setState({
-        editing: true,
-        format: "yellow",
-        iconAnimate: 'loading',
-        deleting: false
-      });
-    } else {
-      this.setState({
-        editing: false,
-        format: "red",
-        iconAnimate: 'loading',
-        deleting: true
-      });
-    }
+    this.props.deleteMode();
   }
 
   addItemToShoppingList(){
@@ -68,7 +57,7 @@ class Item extends React.Component{
     this.props.clearInput();
   }
   getOrClear(){
-    if(this.state.editing){
+    if(this.props.editing && this.props.editItem.id === this.props.item.id){
       this.clearInput();
     } else {
       this.getItemById()
@@ -79,15 +68,15 @@ class Item extends React.Component{
     let deleteIcon;
     let deletingCheckOrEditIcon;
 
-    if(this.state.editing){
+    if(this.props.editing && this.props.editItem.id === this.props.item.id){
         deleteIcon = <Icon onClick={this.deleteMode} color="red" size="huge" name="remove circle"/>
-    } else if (this.state.deleting){
+    } else if (this.props.deleting && this.props.editItem.id === this.props.item.id){
         deleteIcon = <Icon color="red" size="huge" name="remove circle" className={this.state.iconAnimate} />
     } else {
         deleteIcon = <Icon style={{visibility:'hidden'}} size="huge" name="remove" />
     }
 
-    if(this.state.deleting){
+    if(this.props.deleting && this.props.editItem.id === this.props.item.id){
       deletingCheckOrEditIcon = (
         <Container text textAlign="center">
           <p>Delete this item?</p>

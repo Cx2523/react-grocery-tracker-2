@@ -10,6 +10,8 @@ const ItemsContainer = (props) => {
         createNewItem={props.createNewItem}
         updateExistingItem={props.updateExistingItem}
         clearInput={props.clearInput}
+        deleting = {props.deleting}
+        editing = {props.editing}
       />
       <ItemsList
         items={props.items}
@@ -18,6 +20,9 @@ const ItemsContainer = (props) => {
         editItem={props.editItem}
         clearInput={props.clearInput}
         addItemToShoppingList={props.addItemToShoppingList}
+        deleteMode = {props.deleteMode}
+        deleting = {props.deleting}
+        editing = {props.editing}
       />
     </div>
   );

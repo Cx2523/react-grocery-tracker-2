@@ -28,7 +28,9 @@ class App extends React.Component {
         list: [],
         timeStamp: '',
         name: ''
-      }
+      },
+      deleting: false,
+      editing: false
     };
     this.createNewItem = this.createNewItem.bind(this);
     this.getItemById = this.getItemById.bind(this);
@@ -41,6 +43,7 @@ class App extends React.Component {
     this.removeFromShoppingList = this.removeFromShoppingList.bind(this);
     this.saveShoppingList = this.saveShoppingList.bind(this);
     this.loadList = this.loadList.bind(this);
+    this.deleteMode = this.deleteMode.bind(this);
   }
 
   componentDidMount(){
@@ -77,7 +80,7 @@ class App extends React.Component {
       cost: '',
       desc: '',
       id: ''
-    })});
+    }), editing: false, deleting: false });
   }
 
   getItemById(id){
@@ -85,7 +88,13 @@ class App extends React.Component {
     let item = this.state.items.find((item) => {
         return item.id === id;
     });
-    this.setState({currentItem: Object.assign({}, item)});
+    this.setState({currentItem: Object.assign({}, item), editing: true, deleting: false});
+  }
+  editMode(){
+    this.setState({editing: !this.state.editing});
+  }
+  deleteMode(){
+    this.setState({editing: !this.state.editing, deleting: !this.state.deleting});
   }
 
   deleteItem(id){
@@ -106,7 +115,7 @@ class App extends React.Component {
       cost: '',
       desc: '',
       id: ''
-    })});
+    }), editing: false, deleting: false });
   }
 
   addItemToShoppingList(id){
@@ -210,6 +219,7 @@ class App extends React.Component {
                 removeFromShoppingList={this.removeFromShoppingList}
                 saveShoppingList={this.saveShoppingList}
                 loadList = {this.loadList}
+                deleteMode = {this.deleteMode}
                 />}
               />
             <Route path="/stats" component={StatsPage} />

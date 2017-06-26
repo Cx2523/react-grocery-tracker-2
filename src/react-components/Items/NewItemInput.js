@@ -12,7 +12,7 @@ class NewItemInput extends React.Component {
         desc: '',
         id: ''
       },
-      editing: false
+      inputFormat: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,10 +20,19 @@ class NewItemInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if (nextProps.editItem.id !== ''){
-      this.setState({editing: true});
-    } else {
-      this.setState({editing: false});
+    // if (nextProps.editItem.id !== ''){
+    //   this.setState({editing: true});
+    // } else {
+    //   this.setState({editing: false});
+    // }
+    if (nextProps.editing){
+      this.setState({inputFormat: 'editing'});
+    }
+    else if (nextProps.deleting) {
+      this.setState({inputFormat: 'deleting'});
+    }
+    else {
+      this.setState({inputFormat: ''});
     }
     this.setState({item: Object.assign({}, nextProps.editItem)});
   }
@@ -64,6 +73,7 @@ class NewItemInput extends React.Component {
               type="text"
               placeholder="Item Name"
               value={this.state.item.name}
+              id={this.state.inputFormat}
             />
           </div>
           <div className="field">
@@ -74,7 +84,7 @@ class NewItemInput extends React.Component {
               type="text"
               placeholder="Cost Per Unit"
               value={this.state.item.cost}
-              className="item-input"
+              id={this.state.inputFormat}
             />
           </div>
           <div className="field">
@@ -84,6 +94,7 @@ class NewItemInput extends React.Component {
               type="text"
               placeholder="Description"
               value={this.state.item.desc}
+              id={this.state.inputFormat}
             />
           </div>
           <button onClick={this.handleSubmit} className="ui basic green button">Submit</button>

@@ -17,6 +17,9 @@ const ListItemPage = (props) => {
           deleteItem={props.deleteItem}
           clearInput={props.clearInput}
           addItemToShoppingList={props.addItemToShoppingList}
+          deleteMode = {props.deleteMode}
+          deleting = {props.stateData.deleting}
+          editing = {props.stateData.editing}
         />
       </Grid.Column>
       <Grid.Column >
