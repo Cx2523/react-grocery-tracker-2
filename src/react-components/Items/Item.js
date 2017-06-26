@@ -91,11 +91,11 @@ class Item extends React.Component{
     }
 
     return (
-      <Segment color={this.state.format}>
+      <Segment id="item-card-container" size={"tiny"} color={this.state.format}>
         <div className="item-card">
-          <Segment onClick={this.addItemToShoppingList} className="item-info">
-            <h1>{this.props.item.name}</h1>
-            <h1>{this.props.item.cost}</h1>
+          <Segment inverted color={this.state.format} size={"mini"} onClick={this.addItemToShoppingList} className="item-info">
+            <h3>{this.props.item.name}</h3>
+            <h3>{this.props.item.cost}</h3>
           </Segment>
           <div className="item-control">
             { deleteIcon }

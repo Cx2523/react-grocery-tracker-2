@@ -63,7 +63,7 @@ class NewItemInput extends React.Component {
 
   render(){
     return(
-      <Segment raised>
+      <Segment inverted raised>
         <Header as='h1'>Manage Items</Header>
         <form  className="ui form">
           <div className="field" required>
