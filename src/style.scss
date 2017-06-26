@@ -40,15 +40,21 @@
   }
 }
 
-Input#editing{
+Input#editing, Segment#editing{
   background-color: lightyellow;
   color:orange;
 }
-Input#deleting{
+Input#deleting, Segment#deleting {
   background-color: lightpink;
   color: red;
 }
 
 p{
+  color:black;
   margin:0;
+}
+
+#delete-control{
+  float: right;
+  margin:50px;
 }

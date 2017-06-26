@@ -7,7 +7,7 @@ const ListItemPage = (props) => {
 
   return (
     <Grid columns={2} divided padded>
-      <Grid.Column color={'grey'} inverted>
+      <Grid.Column color={'grey'}>
         <ItemsContainer
           editItem={props.editItem}
           getItemById={props.getItemById}

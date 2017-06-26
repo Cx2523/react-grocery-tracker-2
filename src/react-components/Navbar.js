@@ -6,7 +6,7 @@ class Navbar extends React.Component{
   constructor(){
     super();
     this.state={
-      activePage: 'itemList'
+      activePage: 'activePage'
     };
     this.handleClick = this.handleClick.bind(this);
   }

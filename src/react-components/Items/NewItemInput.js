@@ -20,11 +20,6 @@ class NewItemInput extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    // if (nextProps.editItem.id !== ''){
-    //   this.setState({editing: true});
-    // } else {
-    //   this.setState({editing: false});
-    // }
     if (nextProps.editing){
       this.setState({inputFormat: 'editing'});
     }
@@ -63,7 +58,7 @@ class NewItemInput extends React.Component {
 
   render(){
     return(
-      <Segment inverted raised>
+      <Segment id={this.state.inputFormat}>
         <Header as='h1'>Manage Items</Header>
         <form  className="ui form">
           <div className="field" required>
