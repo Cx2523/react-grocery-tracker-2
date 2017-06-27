@@ -18,8 +18,8 @@ const ShoppingList = (props) => {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Item</Table.HeaderCell>
-            <Table.HeaderCell>Cost per Unit</Table.HeaderCell>
             <Table.HeaderCell>Quantity</Table.HeaderCell>
+            <Table.HeaderCell>Cost per Unit</Table.HeaderCell>
             <Table.HeaderCell>Total Cost</Table.HeaderCell>
             <Table.HeaderCell>Increase Quantity</Table.HeaderCell>
             <Table.HeaderCell>Decrease Quantity</Table.HeaderCell>

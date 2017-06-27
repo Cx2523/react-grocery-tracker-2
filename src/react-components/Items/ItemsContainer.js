@@ -21,7 +21,6 @@ class ItemsContainer extends React.Component{
     }
   }
 
-
   openItemEdit(){
     if (!this.state.deleting && !this.state.editing){
       if(this.state.activeIndex === 1){

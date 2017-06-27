@@ -66,3 +66,10 @@ p{
 #manage-items-title {
   display: inline;
 }
+.datacell{
+  transition: background-color .2s, color .2s, font-size .2s;
+  padding: 1em;
+}
+.ui.padded.table td{
+  padding:0;
+}
