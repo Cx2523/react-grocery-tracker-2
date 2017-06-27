@@ -6,8 +6,8 @@ import { Grid } from 'semantic-ui-react';
 const ListItemPage = (props) => {
 
   return (
-    <Grid columns={2} divided padded>
-      <Grid.Column color={'grey'}>
+    <Grid  columns={2} divided padded>
+      <Grid.Column>
         <ItemsContainer
           editItem={props.editItem}
           getItemById={props.getItemById}

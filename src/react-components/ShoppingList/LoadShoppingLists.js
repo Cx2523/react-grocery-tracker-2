@@ -23,7 +23,7 @@ class LoadShoppingLists extends React.Component {
       savedLists = <div></div>;
     }
     return (
-      <Segment color={'grey'} inverted>
+      <Segment raised>
         <Button onClick={this.toggleSavedLists}>Show Saved Lists</Button>
         { savedLists }
       </Segment>

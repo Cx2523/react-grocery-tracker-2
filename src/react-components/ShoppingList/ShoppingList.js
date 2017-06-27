@@ -12,7 +12,7 @@ const ShoppingList = (props) => {
   }
 
   return (
-    <Segment raised inverted color={'yellow'}>
+    <Segment raised>
       <SaveShoppingList saveShoppingList={props.saveShoppingList} currentShoppingList={props.currentShoppingList}/>
       <Table textAlign={'center'} celled padded striped color={"blue"} inverted>
         <Table.Header>

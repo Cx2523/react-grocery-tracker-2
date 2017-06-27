@@ -33,7 +33,6 @@ class Navbar extends React.Component{
           <Icon name='info circle' />
           About
         </Menu.Item>
-
       </Menu>
     );
   }

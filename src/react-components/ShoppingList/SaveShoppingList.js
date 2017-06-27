@@ -5,7 +5,7 @@ class SaveShoppingList extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      listName: props.currentShoppingList.name
+      listName: ''
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -13,7 +13,7 @@ class SaveShoppingList extends React.Component{
 
   handleSubmit(){
     this.props.saveShoppingList(this.state.listName, this.props.currentShoppingList.list);
-    this.setState({listName: props.currentShoppingList.name});
+    this.setState({listName: this.props.currentShoppingList.name});
   }
   handleChange(event){
     this.setState({listName: event.target.value});

@@ -58,8 +58,7 @@ class NewItemInput extends React.Component {
 
   render(){
     return(
-      <Segment id={this.state.inputFormat}>
-        <Header as='h1'>Manage Items</Header>
+      <Segment raised id={this.state.inputFormat}>
         <form  className="ui form">
           <div className="field" required>
             <Input

@@ -141,7 +141,6 @@ class App extends React.Component {
   }
 
   incrementShoppingListQuantity(id){
-    console.log(this.state.currentShoppingList);
     let newShoppingList = this.state.currentShoppingList.list.map(item => {
       if (item.id === id) {
         item.quantity++;
