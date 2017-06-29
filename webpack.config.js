@@ -6,6 +6,7 @@ const webpack = require('webpack');
 //commonJS is used.
 
 //NODE_ENV is set whenever the prod script is run. If the prod script is not run it is undefined.
+console.log(process.env.NODE_ENV);
 const isProdEnv = process.env.NODE_ENV === "production";
 const cssDev = ['style-loader', 'css-loader', 'sass-loader'];
 const cssProd = ExtractTextWebpackPlugin.extract({
@@ -14,6 +15,13 @@ const cssProd = ExtractTextWebpackPlugin.extract({
     publicPath: '/dist'
 });
 const cssConfig = isProdEnv ? cssProd : cssDev;
+const lessDev = ['style-loader', 'css-loader', 'less-loader'];
+const lessProd = ExtractTextWebpackPlugin.extract({
+    fallback: 'style-loader',
+    use: ['css-loader', 'less-loader'],
+    publicPath: '/dist'
+});
+const lessConfig = isProdEnv ? lessProd : lessDev;
 
 
 module.exports = {
@@ -22,7 +30,8 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
+    publicPath: '/dist'
   },
   devServer:{
       contentBase: path.join(__dirname, "dist"),
@@ -33,26 +42,33 @@ module.exports = {
       hot: true,
       historyApiFallback: true
   },
+  devtool: 'source-map',
   plugins: [
     new HtmlWebpackPlugin(
       {
         title: 'Custom Template',
-        // minify: {
-        //   collapseWhitespace: true
-        // },
-        hash: true,
+        minify: {
+          collapseWhitespace: true
+        },
+        // hash: true,
         template: './src/template.html',
         filename: 'index.html'
       }
     ),
     new ExtractTextWebpackPlugin({
-      filename: '/css/[name].css',
+      filename: 'css/[name].css',
       disable: !isProdEnv,
-      allChunks: true
+      allChunks: true,
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin()
   ],
+  resolve: {
+    alias: {
+        semantic: path.resolve(__dirname, 'semantic/src/'),
+        jquery: path.resolve(__dirname, 'node_modules/jquery/src/jquery')
+    }
+  },
   module: {
     rules: [
       {
@@ -63,6 +79,10 @@ module.exports = {
       {
         test: /\.scss$/,
         use: cssConfig
+      },
+      {
+        test: /\.less$/,
+        use: lessConfig
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,

@@ -8,16 +8,20 @@
     "webpack": "webpack -d --watch",
     "clean": "rimraf ./dist/*",
     "prod": "npm run clean && NODE_ENV=production webpack -p",
-    "test": "mocha --compilers js:babel-register"
+    "test": "mocha --compilers js:babel-register",
+    "build": "NODE_ENV=production webpack --config ./webpack.config.js --progress --colors"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.16.2",
+    "express": "^4.15.3",
     "history": "^4.6.2",
+    "less-loader": "^4.0.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.1",
+    "semantic-ui-css": "^2.2.10",
     "semantic-ui-react": "^0.68.5",
     "webpack": "^2.4.1"
   },

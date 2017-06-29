@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Segment } from 'semantic-ui-react';
 import ShoppingListRow from './ShoppingListRow.js';
 import SaveShoppingList from './SaveShoppingList.js';
+import ReactDOM from 'react-dom';
 
 const ShoppingList = (props) => {
   let sumTotal;
