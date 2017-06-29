@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "12f755aa9e11dbed7446"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e0ededfe71d17e4f23df"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -64864,7 +64864,9 @@ var ItemsContainer = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (ItemsContainer.__proto__ || Object.getPrototypeOf(ItemsContainer)).call(this));
 
     _this.state = {
-      activeIndex: 1
+      activeIndex: 1,
+      header: 'Create New Items',
+      headerFormat: 'green'
     };
     _this.openItemEdit = _this.openItemEdit.bind(_this);
     return _this;
@@ -64877,6 +64879,13 @@ var ItemsContainer = function (_React$Component) {
         this.setState({ activeIndex: 0 });
       } else {
         this.setState({ activeIndex: 1 });
+      }
+      if (nextProps.deleting) {
+        this.setState({ header: 'Delete This Item', headerFormat: 'red' });
+      } else if (nextProps.editing) {
+        this.setState({ header: 'Edit This Item', headerFormat: 'yellow' });
+      } else {
+        this.setState({ header: 'Create New Items', headerFormat: 'green' });
       }
     }
   }, {
@@ -64904,12 +64913,12 @@ var ItemsContainer = function (_React$Component) {
             null,
             _react2.default.createElement(
               _semanticUiReact.Segment,
-              { raised: true },
-              _react2.default.createElement(_semanticUiReact.Icon, { color: 'yellow', size: 'big', name: 'edit' }),
+              { inverted: true, color: this.state.headerFormat, raised: true },
+              _react2.default.createElement(_semanticUiReact.Icon, { size: 'big', name: 'edit' }),
               _react2.default.createElement(
                 'h2',
                 { id: 'manage-items-title' },
-                'Manage Items'
+                this.state.header
               )
             )
           ),
@@ -64974,7 +64983,7 @@ var ItemsList = function ItemsList(props) {
   if (props.items.length >= 1) {
     return _react2.default.createElement(
       _semanticUiReact.Segment,
-      { raised: true, className: 'item-list' },
+      { color: 'blue', raised: true, className: 'item-list' },
       _react2.default.createElement(
         'h1',
         null,
@@ -65040,7 +65049,8 @@ var NewItemInput = function (_React$Component) {
         desc: '',
         id: ''
       },
-      inputFormat: ''
+      inputFormat: 'creating',
+      statusColor: 'green'
     };
     _this.handleChange = _this.handleChange.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
@@ -65052,11 +65062,11 @@ var NewItemInput = function (_React$Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       if (nextProps.editing) {
-        this.setState({ inputFormat: 'editing' });
+        this.setState({ inputFormat: 'editing', statusColor: 'yellow' });
       } else if (nextProps.deleting) {
-        this.setState({ inputFormat: 'deleting' });
+        this.setState({ inputFormat: 'deleting', statusColor: 'red' });
       } else {
-        this.setState({ inputFormat: '' });
+        this.setState({ inputFormat: 'creating', statusColor: 'green' });
       }
       this.setState({ item: Object.assign({}, nextProps.editItem) });
     }
@@ -65075,7 +65085,7 @@ var NewItemInput = function (_React$Component) {
       var item = Object.assign({}, this.state.item); //copy item before input clear
       if (item.id !== '') {
         this.props.updateExistingItem(item);
-        this.setState({ editing: false });
+        this.setState({ statusColor: 'green' });
       } else {
         this.props.createNewItem(item);
       }
@@ -65083,7 +65093,7 @@ var NewItemInput = function (_React$Component) {
   }, {
     key: 'clearInput',
     value: function clearInput(event) {
-      this.setState({ editing: false });
+      this.setState({ statusColor: 'green' });
       event.preventDefault();
       this.props.clearInput();
     }
@@ -65092,7 +65102,7 @@ var NewItemInput = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         _semanticUiReact.Segment,
-        { raised: true, id: this.state.inputFormat },
+        { color: this.state.statusColor, raised: true, id: this.state.inputFormat },
         _react2.default.createElement(
           'form',
           { className: 'ui form' },
@@ -65185,10 +65195,10 @@ var ListItemPage = function ListItemPage(props) {
 
   return _react2.default.createElement(
     _semanticUiReact.Grid,
-    { columns: 2, divided: true, padded: true },
+    { divided: true, padded: true },
     _react2.default.createElement(
       _semanticUiReact.Grid.Column,
-      null,
+      { width: 6 },
       _react2.default.createElement(_ItemsContainer2.default, {
         editItem: props.editItem,
         getItemById: props.getItemById,
@@ -65205,7 +65215,7 @@ var ListItemPage = function ListItemPage(props) {
     ),
     _react2.default.createElement(
       _semanticUiReact.Grid.Column,
-      null,
+      { width: 10 },
       _react2.default.createElement(_ShoppingListContainer2.default, {
         currentShoppingList: props.stateData.currentShoppingList,
         incrementShoppingListQuantity: props.incrementShoppingListQuantity,
