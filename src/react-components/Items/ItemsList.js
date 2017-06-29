@@ -13,7 +13,12 @@ const ItemsList = (props) => {
     );
   }
   else{
-    return(<h1>No Items</h1>);
+    return(
+      <Segment color={'blue'} raised className="item-list">
+        <h1>No Saved Items</h1>
+        <p>Click on create new items to add...</p>
+      </Segment>
+    );
   }
 }
 

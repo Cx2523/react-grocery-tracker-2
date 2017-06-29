@@ -8,7 +8,7 @@ const SavedLists = (props) => {
   }
 
   return (
-    <Segment inverted color={'black'} size='tiny'>
+    <Segment color={'black'} size='tiny'>
       <div className="saved-list-container">
         <div className="saved-list-text">
           <h4>{props.list.name}</h4>

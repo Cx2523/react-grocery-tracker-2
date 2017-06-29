@@ -59,7 +59,7 @@ class NewItemInput extends React.Component {
 
   render(){
     return(
-      <Segment color={this.state.statusColor} raised id={this.state.inputFormat}>
+      <Segment color={this.state.statusColor} raised id={this.state.inputFormat} className='item-form'>
         <form className="ui form">
           <div className="field" required>
             <Input

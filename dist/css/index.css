@@ -23,7 +23,8 @@ body {
     width: 40%; }
 
 .item-list {
-  margin-top: 5%; }
+  margin-top: 5%;
+  min-height: 400px; }
 
 .item-input[type='text'] {
   background-color: red; }

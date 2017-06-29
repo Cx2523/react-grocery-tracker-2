@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e0ededfe71d17e4f23df"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "28e207632a98e3360e98"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -64496,7 +64496,7 @@ var App = function (_React$Component) {
           cost: '',
           desc: '',
           id: ''
-        }) });
+        }), editing: false, deleting: false });
     }
   }, {
     key: 'clearInput',
@@ -64891,10 +64891,10 @@ var ItemsContainer = function (_React$Component) {
   }, {
     key: 'openItemEdit',
     value: function openItemEdit() {
-      if (!this.state.deleting && !this.state.editing) {
+      if (!this.props.deleting && !this.props.editing) {
         if (this.state.activeIndex === 1) {
           this.setState({ activeIndex: 0 });
-        } else if (this.state.activeIndex === 0) {
+        } else if (this.state.activeIndex == 0) {
           this.setState({ activeIndex: 1 });
         }
       }
@@ -64996,9 +64996,18 @@ var ItemsList = function ItemsList(props) {
     );
   } else {
     return _react2.default.createElement(
-      'h1',
-      null,
-      'No Items'
+      _semanticUiReact.Segment,
+      { color: 'blue', raised: true, className: 'item-list' },
+      _react2.default.createElement(
+        'h1',
+        null,
+        'No Saved Items'
+      ),
+      _react2.default.createElement(
+        'p',
+        null,
+        'Click on create new items to add...'
+      )
     );
   }
 };
@@ -65102,7 +65111,7 @@ var NewItemInput = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         _semanticUiReact.Segment,
-        { color: this.state.statusColor, raised: true, id: this.state.inputFormat },
+        { color: this.state.statusColor, raised: true, id: this.state.inputFormat, className: 'item-form' },
         _react2.default.createElement(
           'form',
           { className: 'ui form' },
@@ -65518,7 +65527,7 @@ var SavedLists = function SavedLists(props) {
 
   return _react2.default.createElement(
     _semanticUiReact.Segment,
-    { inverted: true, color: 'black', size: 'tiny' },
+    { color: 'black', size: 'tiny' },
     _react2.default.createElement(
       'div',
       { className: 'saved-list-container' },

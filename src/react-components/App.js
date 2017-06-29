@@ -106,7 +106,7 @@ class App extends React.Component {
       cost: '',
       desc: '',
       id: ''
-    })});
+    }), editing: false, deleting: false });
   }
 
   clearInput(){

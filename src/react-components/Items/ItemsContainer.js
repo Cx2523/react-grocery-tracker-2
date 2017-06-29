@@ -33,11 +33,11 @@ class ItemsContainer extends React.Component{
   }
 
   openItemEdit(){
-    if (!this.state.deleting && !this.state.editing){
+    if (!this.props.deleting && !this.props.editing){
       if(this.state.activeIndex === 1){
         this.setState({activeIndex: 0});
       }
-      else if(this.state.activeIndex === 0){
+      else if(this.state.activeIndex == 0){
         this.setState({activeIndex: 1});
       }
     }
