@@ -1,5 +1,5 @@
 body{
-  background-color: lightgreen;
+  background-color: #e6ffff;
 }
 
 #item-card-container{
@@ -27,7 +27,6 @@ body{
   }
 }
 
-
 .item-list{
   margin-top: 5%;
 }
@@ -52,6 +51,9 @@ Input#deleting, Segment#deleting {
   background-color: lightpink;
   color: red;
 }
+Input#creating, Segment#deleting {
+  background-color: #ccffcc;
+}
 
 p{
   color:black;
@@ -65,11 +67,26 @@ p{
 
 #manage-items-title {
   display: inline;
+  margin-left:3%;
 }
+
 .datacell{
   transition: background-color .1s, color .1s, font-size .1s;
   padding: 1em;
 }
 .ui.padded.table td{
   padding:0;
+}
+
+/*the following modifies semantic-ui-react's default accordion behavavior to make the transition smooth instead of instant*/
+.ui.accordion .accordion .title~.content, .ui.accordion .title~.content{
+  display:block;
+  height:0px;
+}
+.ui.accordion .accordion .active.content, .ui.accordion .active.content{
+  display:block;
+  height: 225px;
+}
+.active.content, .title~.content{
+  transition: height 1s;
 }

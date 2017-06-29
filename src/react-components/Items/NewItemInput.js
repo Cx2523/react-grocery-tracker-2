@@ -12,7 +12,8 @@ class NewItemInput extends React.Component {
         desc: '',
         id: ''
       },
-      inputFormat: ''
+      inputFormat: 'creating',
+      statusColor:'green'
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,13 +22,13 @@ class NewItemInput extends React.Component {
 
   componentWillReceiveProps(nextProps){
     if (nextProps.editing){
-      this.setState({inputFormat: 'editing'});
+      this.setState({inputFormat: 'editing', statusColor:'yellow'});
     }
     else if (nextProps.deleting) {
-      this.setState({inputFormat: 'deleting'});
+      this.setState({inputFormat: 'deleting', statusColor: 'red'});
     }
     else {
-      this.setState({inputFormat: ''});
+      this.setState({inputFormat: 'creating', statusColor: 'green'});
     }
     this.setState({item: Object.assign({}, nextProps.editItem)});
   }
@@ -44,22 +45,22 @@ class NewItemInput extends React.Component {
     const item = Object.assign({} , this.state.item); //copy item before input clear
     if (item.id !== '') {
       this.props.updateExistingItem(item);
-      this.setState({editing: false});
+      this.setState({statusColor: 'green' });
     } else {
       this.props.createNewItem(item);
     }
   }
 
   clearInput(event){
-    this.setState({editing: false });
+    this.setState({statusColor: 'green' });
     event.preventDefault();
     this.props.clearInput();
   }
 
   render(){
     return(
-      <Segment raised id={this.state.inputFormat}>
-        <form  className="ui form">
+      <Segment color={this.state.statusColor} raised id={this.state.inputFormat}>
+        <form className="ui form">
           <div className="field" required>
             <Input
               name="name"

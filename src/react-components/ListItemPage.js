@@ -6,8 +6,8 @@ import { Grid } from 'semantic-ui-react';
 const ListItemPage = (props) => {
 
   return (
-    <Grid  columns={2} divided padded>
-      <Grid.Column>
+    <Grid divided padded>
+      <Grid.Column width={6}>
         <ItemsContainer
           editItem={props.editItem}
           getItemById={props.getItemById}
@@ -22,7 +22,7 @@ const ListItemPage = (props) => {
           editing = {props.stateData.editing}
         />
       </Grid.Column>
-      <Grid.Column >
+      <Grid.Column width={10} >
         <ShoppingListContainer
           currentShoppingList={props.stateData.currentShoppingList}
           incrementShoppingListQuantity={props.incrementShoppingListQuantity}

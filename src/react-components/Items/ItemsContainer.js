@@ -7,7 +7,9 @@ class ItemsContainer extends React.Component{
   constructor(){
     super();
     this.state = {
-      activeIndex: 1
+      activeIndex: 1,
+      header: 'Create New Items',
+      headerFormat: 'green'
     }
     this.openItemEdit = this.openItemEdit.bind(this);
   }
@@ -18,6 +20,15 @@ class ItemsContainer extends React.Component{
     }
     else {
       this.setState({activeIndex: 1});
+    }
+    if(nextProps.deleting){
+      this.setState({header: 'Delete This Item', headerFormat: 'red'});
+    }
+    else if(nextProps.editing){
+      this.setState({header: 'Edit This Item', headerFormat: 'yellow'});
+    }
+    else{
+      this.setState({header: 'Create New Items', headerFormat: 'green'});
     }
   }
 
@@ -37,9 +48,9 @@ class ItemsContainer extends React.Component{
       <div>
         <Accordion onTitleClick={this.openItemEdit} activeIndex={this.state.activeIndex}>
           <Accordion.Title>
-            <Segment raised >
-              <Icon color={'yellow'} size={'big'} name='edit'></Icon>
-              <h2 id={'manage-items-title'}>Manage Items</h2>
+            <Segment inverted color={this.state.headerFormat} raised >
+              <Icon size={'big'} name='edit'></Icon>
+              <h2 id='manage-items-title'>{this.state.header}</h2>
             </Segment>
           </Accordion.Title>
           <Accordion.Content>
