@@ -35,7 +35,6 @@ class Item extends React.Component{
         iconAnimate: ''
       });
     }
-
   }
 
   deleteMode(){
@@ -93,7 +92,7 @@ class Item extends React.Component{
     return (
       <Segment id="item-card-container" size={"tiny"} color={this.state.format}>
         <div className="item-card">
-          <Segment inverted color={this.state.format} size={"mini"} onClick={this.addItemToShoppingList} className="item-info">
+          <Segment inverted className={'item-info'} color={this.state.format} size={"mini"} onClick={this.addItemToShoppingList}>
             <h3>{this.props.item.name}</h3>
             <h3>{this.props.item.cost}</h3>
           </Segment>

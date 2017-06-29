@@ -11,16 +11,10 @@ class ItemsContainer extends React.Component{
       header: 'Create New Items',
       headerFormat: 'green'
     }
-    this.openItemEdit = this.openItemEdit.bind(this);
+    this.toggleCreateMode = this.toggleCreateMode.bind(this);
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.deleting || nextProps.editing) {
-      this.setState({activeIndex: 0});
-    }
-    else {
-      this.setState({activeIndex: 1});
-    }
     if(nextProps.deleting){
       this.setState({header: 'Delete This Item', headerFormat: 'red'});
     }
@@ -30,23 +24,22 @@ class ItemsContainer extends React.Component{
     else{
       this.setState({header: 'Create New Items', headerFormat: 'green'});
     }
+    if(nextProps.deleting || nextProps.editing || nextProps.creating) {
+      this.setState({activeIndex: 0});
+    }
+    else {
+      this.setState({activeIndex: 1});
+    }
   }
 
-  openItemEdit(){
-    if (!this.props.deleting && !this.props.editing){
-      if(this.state.activeIndex === 1){
-        this.setState({activeIndex: 0});
-      }
-      else if(this.state.activeIndex == 0){
-        this.setState({activeIndex: 1});
-      }
-    }
+  toggleCreateMode(){
+    this.props.createMode();
   }
 
   render(){
     return (
       <div>
-        <Accordion onTitleClick={this.openItemEdit} activeIndex={this.state.activeIndex}>
+        <Accordion onTitleClick={this.toggleCreateMode} activeIndex={this.state.activeIndex}>
           <Accordion.Title>
             <Segment inverted color={this.state.headerFormat} raised >
               <Icon size={'big'} name='edit'></Icon>

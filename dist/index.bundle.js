@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "28e207632a98e3360e98"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8de62160992e45551898"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -64404,7 +64404,8 @@ var App = function (_React$Component) {
         name: ''
       },
       deleting: false,
-      editing: false
+      editing: false,
+      creating: false
     };
     _this.createNewItem = _this.createNewItem.bind(_this);
     _this.getItemById = _this.getItemById.bind(_this);
@@ -64418,6 +64419,7 @@ var App = function (_React$Component) {
     _this.saveShoppingList = _this.saveShoppingList.bind(_this);
     _this.loadList = _this.loadList.bind(_this);
     _this.deleteMode = _this.deleteMode.bind(_this);
+    _this.createMode = _this.createMode.bind(_this);
     return _this;
   }
 
@@ -64475,15 +64477,20 @@ var App = function (_React$Component) {
       });
       this.setState({ currentItem: Object.assign({}, item), editing: true, deleting: false });
     }
-  }, {
-    key: 'editMode',
-    value: function editMode() {
-      this.setState({ editing: !this.state.editing });
-    }
+
+    // editMode(){
+    //   this.setState({editing: !this.state.editing});
+    // }
+
   }, {
     key: 'deleteMode',
     value: function deleteMode() {
       this.setState({ editing: !this.state.editing, deleting: !this.state.deleting });
+    }
+  }, {
+    key: 'createMode',
+    value: function createMode() {
+      this.setState({ creating: !this.state.creating });
     }
   }, {
     key: 'deleteItem',
@@ -64623,7 +64630,8 @@ var App = function (_React$Component) {
                   removeFromShoppingList: _this2.removeFromShoppingList,
                   saveShoppingList: _this2.saveShoppingList,
                   loadList: _this2.loadList,
-                  deleteMode: _this2.deleteMode
+                  deleteMode: _this2.deleteMode,
+                  createMode: _this2.createMode
                 });
               }
             }),
@@ -64791,7 +64799,7 @@ var Item = function (_React$Component) {
           { className: 'item-card' },
           _react2.default.createElement(
             _semanticUiReact.Segment,
-            { inverted: true, color: this.state.format, size: "mini", onClick: this.addItemToShoppingList, className: 'item-info' },
+            { inverted: true, className: 'item-info', color: this.state.format, size: "mini", onClick: this.addItemToShoppingList },
             _react2.default.createElement(
               'h3',
               null,
@@ -64868,18 +64876,13 @@ var ItemsContainer = function (_React$Component) {
       header: 'Create New Items',
       headerFormat: 'green'
     };
-    _this.openItemEdit = _this.openItemEdit.bind(_this);
+    _this.toggleCreateMode = _this.toggleCreateMode.bind(_this);
     return _this;
   }
 
   _createClass(ItemsContainer, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      if (nextProps.deleting || nextProps.editing) {
-        this.setState({ activeIndex: 0 });
-      } else {
-        this.setState({ activeIndex: 1 });
-      }
       if (nextProps.deleting) {
         this.setState({ header: 'Delete This Item', headerFormat: 'red' });
       } else if (nextProps.editing) {
@@ -64887,17 +64890,16 @@ var ItemsContainer = function (_React$Component) {
       } else {
         this.setState({ header: 'Create New Items', headerFormat: 'green' });
       }
+      if (nextProps.deleting || nextProps.editing || nextProps.creating) {
+        this.setState({ activeIndex: 0 });
+      } else {
+        this.setState({ activeIndex: 1 });
+      }
     }
   }, {
-    key: 'openItemEdit',
-    value: function openItemEdit() {
-      if (!this.props.deleting && !this.props.editing) {
-        if (this.state.activeIndex === 1) {
-          this.setState({ activeIndex: 0 });
-        } else if (this.state.activeIndex == 0) {
-          this.setState({ activeIndex: 1 });
-        }
-      }
+    key: 'toggleCreateMode',
+    value: function toggleCreateMode() {
+      this.props.createMode();
     }
   }, {
     key: 'render',
@@ -64907,7 +64909,7 @@ var ItemsContainer = function (_React$Component) {
         null,
         _react2.default.createElement(
           _semanticUiReact.Accordion,
-          { onTitleClick: this.openItemEdit, activeIndex: this.state.activeIndex },
+          { onTitleClick: this.toggleCreateMode, activeIndex: this.state.activeIndex },
           _react2.default.createElement(
             _semanticUiReact.Accordion.Title,
             null,
@@ -64989,9 +64991,19 @@ var ItemsList = function ItemsList(props) {
         null,
         'Saved Items'
       ),
-      props.items.map(function (item) {
-        return _react2.default.createElement(_Item2.default, { key: item.id, item: item, getItemById: props.getItemById, deleteItem: props.deleteItem, editItem: props.editItem, clearInput: props.clearInput, addItemToShoppingList: props.addItemToShoppingList, deleteMode: props.deleteMode, deleting: props.deleting,
-          editing: props.editing });
+      props.items.map(function (item, index) {
+        return _react2.default.createElement(_Item2.default, {
+          key: item.id,
+          item: item,
+          getItemById: props.getItemById,
+          deleteItem: props.deleteItem,
+          editItem: props.editItem,
+          clearInput: props.clearInput,
+          addItemToShoppingList: props.addItemToShoppingList,
+          deleteMode: props.deleteMode,
+          deleting: props.deleting,
+          editing: props.editing
+        });
       })
     );
   } else {
@@ -65113,12 +65125,13 @@ var NewItemInput = function (_React$Component) {
         _semanticUiReact.Segment,
         { color: this.state.statusColor, raised: true, id: this.state.inputFormat, className: 'item-form' },
         _react2.default.createElement(
-          'form',
-          { className: 'ui form' },
+          _semanticUiReact.Form,
+          null,
           _react2.default.createElement(
             'div',
-            { className: 'field', required: true },
+            { className: 'field' },
             _react2.default.createElement(_semanticUiReact.Input, {
+              required: true,
               name: 'name',
               onChange: this.handleChange,
               type: 'text',
@@ -65131,10 +65144,11 @@ var NewItemInput = function (_React$Component) {
             'div',
             { className: 'field' },
             _react2.default.createElement(_semanticUiReact.Input, {
+              required: true,
               label: '$',
               name: 'cost',
               onChange: this.handleChange,
-              type: 'text',
+              type: 'number',
               placeholder: 'Cost Per Unit',
               value: this.state.item.cost,
               id: this.state.inputFormat
@@ -65219,7 +65233,9 @@ var ListItemPage = function ListItemPage(props) {
         addItemToShoppingList: props.addItemToShoppingList,
         deleteMode: props.deleteMode,
         deleting: props.stateData.deleting,
-        editing: props.stateData.editing
+        editing: props.stateData.editing,
+        creating: props.stateData.creating,
+        createMode: props.createMode
       })
     ),
     _react2.default.createElement(

@@ -60,9 +60,10 @@ class NewItemInput extends React.Component {
   render(){
     return(
       <Segment color={this.state.statusColor} raised id={this.state.inputFormat} className='item-form'>
-        <form className="ui form">
-          <div className="field" required>
+        <Form>
+          <div className="field">
             <Input
+              required
               name="name"
               onChange={this.handleChange}
               type="text"
@@ -73,10 +74,11 @@ class NewItemInput extends React.Component {
           </div>
           <div className="field">
             <Input
+              required
               label="$"
               name="cost"
               onChange={this.handleChange}
-              type="text"
+              type="number"
               placeholder="Cost Per Unit"
               value={this.state.item.cost}
               id={this.state.inputFormat}
@@ -94,7 +96,7 @@ class NewItemInput extends React.Component {
           </div>
           <button onClick={this.handleSubmit} className="ui basic green button">Submit</button>
           <button onClick={this.clearInput} className="ui basic red button">Clear</button>
-        </form>
+        </Form>
       </Segment>
     );
   }

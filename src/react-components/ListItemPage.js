@@ -20,6 +20,8 @@ const ListItemPage = (props) => {
           deleteMode = {props.deleteMode}
           deleting = {props.stateData.deleting}
           editing = {props.stateData.editing}
+          creating = {props.stateData.creating}
+          createMode={props.createMode}
         />
       </Grid.Column>
       <Grid.Column width={10} >
