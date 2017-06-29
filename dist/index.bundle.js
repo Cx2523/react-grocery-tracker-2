@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4f9f35c072f35a4489fa"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "12f755aa9e11dbed7446"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -64137,9 +64137,6 @@ var _style2 = _interopRequireDefault(_style);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import jQuery from 'jquery';
-// import semanticUiCss from 'semantic-ui-css';
-
 (0, _reactDom.render)(_react2.default.createElement(_App2.default, null), document.getElementById('mountNode'));
 
 /***/ }),
@@ -65575,13 +65572,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var ShoppingList = function ShoppingList(props) {
   var sumTotal = void 0;
-  var tabledataSumTotal = null;
   if (props.currentShoppingList.list.length > 0) {
     sumTotal = props.currentShoppingList.list.reduce(function (accumulator, item) {
       return accumulator + item.cost * item.quantity;
     }, 0);
-    tabledataSumTotal = _reactDom2.default.findDOMNode();
-    console.log(tabledataSumTotal);
   }
 
   return _react2.default.createElement(
@@ -65655,11 +65649,7 @@ var ShoppingList = function ShoppingList(props) {
         _react2.default.createElement(
           _semanticUiReact.Table.HeaderCell,
           null,
-          _react2.default.createElement(
-            'div',
-            { className: 'datacell' },
-            sumTotal
-          )
+          sumTotal
         ),
         _react2.default.createElement(_semanticUiReact.Table.HeaderCell, null),
         _react2.default.createElement(_semanticUiReact.Table.HeaderCell, null),

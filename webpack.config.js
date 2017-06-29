@@ -46,7 +46,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin(
       {
-        title: 'Custom Template',
+        title: 'React Shopping Tracker',
         minify: {
           collapseWhitespace: true
         },
