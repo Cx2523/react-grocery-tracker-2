@@ -35,7 +35,8 @@ class InitializeSampleDataModal extends React.Component{
         open={this.state.modalOpen}
       >
         <Modal.Content>
-          <Header as='h1' color={'red'}>There is currently no saved data for this app. Would you like to load some example data to get started?</Header>
+          <Header as='h1' color={'orange'}>Welcome to Shopping Tracker 2.0, built with React, Semantic UI, and Webpack, hosted by Heroku.</Header>
+          <Header as='h2' color={'yellow'}>There is currently no saved data for this app. Would you like to load some example data to get started?</Header>
         </Modal.Content>
         <Modal.Actions>
           <Button
@@ -47,7 +48,7 @@ class InitializeSampleDataModal extends React.Component{
             basic
             color='blue'
             onClick={this.closeModal}
-          >Cancel</Button>
+          >No</Button>
         </Modal.Actions>
       </Modal>
     );

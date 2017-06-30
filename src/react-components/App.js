@@ -1,15 +1,18 @@
-  import React from 'react';
+import React from 'react';
 import ItemsContainer from './Items/ItemsContainer.js';
 import {
   BrowserRouter as Router,
   Route,
   Link
 } from 'react-router-dom';
+import createHistory from 'history/createBrowserHistory';
 import ListItemPage from './ListItemPage.js';
 import StatsPage from './StatsPage.js';
 import AboutPage from './AboutPage.js';
 import Navbar from './Navbar.js';
 import InitializeSampleDataModal from './InitializeSampleDataModal.js';
+
+const history = createHistory();
 
 class App extends React.Component {
   constructor(){
@@ -54,14 +57,10 @@ class App extends React.Component {
 
   componentWillMount(){
     if(Object.keys(localStorage).some((key) => key === 'reactGroceryTrackerData')){
-      this.state.savedDataExists = true;
+      this.state. savedDataExists = true;
       console.log("A saved state exists");
       const savedState = JSON.parse(localStorage.reactGroceryTrackerData);
       this.setState(savedState);
-
-    }
-    else{
-      console.log('no saved data');
     }
   }
 
@@ -226,7 +225,7 @@ class App extends React.Component {
       sampleDataModal = <InitializeSampleDataModal loadSampleData={this.loadSampleData}/>
     }
     return(
-      <Router>
+      <Router history={history}>
         <div>
           <Navbar />
           {sampleDataModal}
@@ -252,7 +251,9 @@ class App extends React.Component {
                 />}
               />
             <Route path="/stats" component={StatsPage} />
-            <Route path="/about" component={AboutPage} />
+            <Route path="/about" render={() => {
+              return <AboutPage history={history}/>
+              } } />
           </div>
         </div>
       </Router>

@@ -1,5 +1,6 @@
 import React from 'react';
 import {Modal, Button, Icon, Header} from 'semantic-ui-react';
+import {Link} from 'react-router-dom';
 
 class DeleteDataModal extends React.Component{
   constructor(){
@@ -49,6 +50,8 @@ class DeleteDataModal extends React.Component{
         </Modal.Content>
         <Modal.Actions>
           <Button
+            as={Link}
+            to={'/'}
             basic
             color='red'
             onClick={this.deleteData}

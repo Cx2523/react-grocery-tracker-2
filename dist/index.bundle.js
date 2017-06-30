@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "df0ab00a0508a99d638e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "28edb3bfee12016b0220"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -64167,11 +64167,12 @@ var _semanticUiReact = __webpack_require__("./node_modules/semantic-ui-react/dis
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var AboutPage = function AboutPage() {
+var AboutPage = function AboutPage(props) {
+  console.log(props);
   return _react2.default.createElement(
     _semanticUiReact.Container,
     null,
-    _react2.default.createElement(_DeleteDataModal2.default, null),
+    _react2.default.createElement(_DeleteDataModal2.default, { history: props.history }),
     _react2.default.createElement(_AboutText2.default, null)
   );
 };
@@ -64227,6 +64228,8 @@ var _react = __webpack_require__("./node_modules/react/react.js");
 var _react2 = _interopRequireDefault(_react);
 
 var _semanticUiReact = __webpack_require__("./node_modules/semantic-ui-react/dist/es/index.js");
+
+var _reactRouterDom = __webpack_require__("./node_modules/react-router-dom/es/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -64306,6 +64309,8 @@ var DeleteDataModal = function (_React$Component) {
           _react2.default.createElement(
             _semanticUiReact.Button,
             {
+              as: _reactRouterDom.Link,
+              to: '/',
               basic: true,
               color: 'red',
               onClick: this.deleteData
@@ -64355,6 +64360,10 @@ var _ItemsContainer2 = _interopRequireDefault(_ItemsContainer);
 
 var _reactRouterDom = __webpack_require__("./node_modules/react-router-dom/es/index.js");
 
+var _createBrowserHistory = __webpack_require__("./node_modules/history/createBrowserHistory.js");
+
+var _createBrowserHistory2 = _interopRequireDefault(_createBrowserHistory);
+
 var _ListItemPage = __webpack_require__("./src/react-components/ListItemPage.js");
 
 var _ListItemPage2 = _interopRequireDefault(_ListItemPage);
@@ -64382,6 +64391,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var history = (0, _createBrowserHistory2.default)();
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -64440,8 +64451,6 @@ var App = function (_React$Component) {
         console.log("A saved state exists");
         var savedState = JSON.parse(localStorage.reactGroceryTrackerData);
         this.setState(savedState);
-      } else {
-        console.log('no saved data');
       }
     }
   }, {
@@ -64629,7 +64638,7 @@ var App = function (_React$Component) {
       }
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
-        null,
+        { history: history },
         _react2.default.createElement(
           'div',
           null,
@@ -64661,7 +64670,9 @@ var App = function (_React$Component) {
               }
             }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/stats', component: _StatsPage2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/about', component: _AboutPage2.default })
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/about', render: function render() {
+                return _react2.default.createElement(_AboutPage2.default, { history: history });
+              } })
           )
         )
       );
@@ -64754,7 +64765,12 @@ var InitializeSampleDataModal = function (_React$Component) {
           null,
           _react2.default.createElement(
             _semanticUiReact.Header,
-            { as: 'h1', color: 'red' },
+            { as: 'h1', color: 'orange' },
+            'Welcome to Shopping Tracker 2.0, built with React, Semantic UI, and Webpack, hosted by Heroku.'
+          ),
+          _react2.default.createElement(
+            _semanticUiReact.Header,
+            { as: 'h2', color: 'yellow' },
             'There is currently no saved data for this app. Would you like to load some example data to get started?'
           )
         ),
@@ -64777,7 +64793,7 @@ var InitializeSampleDataModal = function (_React$Component) {
               color: 'blue',
               onClick: this.closeModal
             },
-            'Cancel'
+            'No'
           )
         )
       );
