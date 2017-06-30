@@ -46,6 +46,7 @@ class App extends React.Component {
     this.loadList = this.loadList.bind(this);
     this.deleteMode = this.deleteMode.bind(this);
     this.createMode = this.createMode.bind(this);
+    this.deleteList = this.deleteList.bind(this);
   }
 
   componentDidMount(){
@@ -93,9 +94,6 @@ class App extends React.Component {
     this.setState({currentItem: Object.assign({}, item), editing: true, deleting: false});
   }
 
-  // editMode(){
-  //   this.setState({editing: !this.state.editing});
-  // }
   deleteMode(){
     this.setState({editing: !this.state.editing, deleting: !this.state.deleting});
   }
@@ -179,6 +177,7 @@ class App extends React.Component {
   }
 
   saveShoppingList(listName, list){
+    console.log('SAve shopping list');
     let newList = true;
     let listObject = {
       list: list,
@@ -201,6 +200,12 @@ class App extends React.Component {
 
   loadList(list){
     this.setState({currentShoppingList: Object.assign({}, list)});
+  }
+  deleteList(listToDelete){
+    let newListsArray = this.state.shoppingLists.filter((list) => {
+      return list.name !== listToDelete.name;
+    });
+    this.setState({shoppingLists: newListsArray});
   }
 
   render(){
@@ -226,6 +231,7 @@ class App extends React.Component {
                 loadList = {this.loadList}
                 deleteMode = {this.deleteMode}
                 createMode = {this.createMode}
+                deleteList = {this.deleteList}
                 />}
               />
             <Route path="/stats" component={StatsPage} />

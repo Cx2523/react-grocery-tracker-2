@@ -18,7 +18,7 @@ class LoadShoppingLists extends React.Component {
   render(){
     let savedLists;
     if (this.state.showSavedLists) {
-      savedLists = <div>{this.props.savedShoppingLists.map(list => <SavedLists key={list.timeStamp} list={list} loadList={this.props.loadList}/>)}</div>
+      savedLists = <div>{this.props.savedShoppingLists.map(list => <SavedLists key={list.timeStamp} list={list} loadList={this.props.loadList} deleteList={this.props.deleteList}/>)}</div>
     } else {
       savedLists = <div></div>;
     }

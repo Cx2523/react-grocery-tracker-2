@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, Button, Input } from 'semantic-ui-react';
+import { Segment, Button, Input, Form } from 'semantic-ui-react';
 
 class SaveShoppingList extends React.Component{
   constructor(props){
@@ -11,9 +11,9 @@ class SaveShoppingList extends React.Component{
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(){
+  handleSubmit(event){
+    event.preventDefault();
     this.props.saveShoppingList(this.state.listName, this.props.currentShoppingList.list);
-    this.setState({listName: this.props.currentShoppingList.name});
   }
   handleChange(event){
     this.setState({listName: event.target.value});
@@ -25,14 +25,20 @@ class SaveShoppingList extends React.Component{
   render(){
     return (
       <Segment inverted color={'blue'} >
-        <Input
-          name="listName"
-          type="text"
-          placeholder="List Name"
-          onChange={this.handleChange}
-          value={this.state.listName}
-        />
-        <Button onClick={this.handleSubmit}>Save List</Button>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Group>
+            <input
+              required
+              name="listName"
+              action="Save"
+              type="text"
+              placeholder="List Name"
+              onChange={this.handleChange}
+              value={this.state.listName}
+            />
+            <Form.Button basic color={'yellow'} content='Save'/>
+          </Form.Group>
+        </Form>
       </Segment>
     );
   }

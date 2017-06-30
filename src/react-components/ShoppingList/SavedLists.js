@@ -6,6 +6,10 @@ const SavedLists = (props) => {
   const loadList = () => {
     props.loadList(props.list);
   }
+  const deleteList = () => {
+    props.deleteList(props.list);
+  }
+
 
   return (
     <Segment color={'black'} size='tiny'>
@@ -17,6 +21,10 @@ const SavedLists = (props) => {
         <div className='saved-list-button'>
           <Icon onClick={loadList} size="big" name="add circle"/>
           <p>Use List</p>
+        </div>
+        <div className='saved-list-button'>
+          <Icon onClick={deleteList} size="big" name="minus circle"/>
+          <p>Delete List</p>
         </div>
       </div>
     </Segment>

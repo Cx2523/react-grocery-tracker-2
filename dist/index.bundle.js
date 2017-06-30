@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8de62160992e45551898"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0f1a76dcd50e2857a234"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -64420,6 +64420,7 @@ var App = function (_React$Component) {
     _this.loadList = _this.loadList.bind(_this);
     _this.deleteMode = _this.deleteMode.bind(_this);
     _this.createMode = _this.createMode.bind(_this);
+    _this.deleteList = _this.deleteList.bind(_this);
     return _this;
   }
 
@@ -64477,11 +64478,6 @@ var App = function (_React$Component) {
       });
       this.setState({ currentItem: Object.assign({}, item), editing: true, deleting: false });
     }
-
-    // editMode(){
-    //   this.setState({editing: !this.state.editing});
-    // }
-
   }, {
     key: 'deleteMode',
     value: function deleteMode() {
@@ -64575,6 +64571,7 @@ var App = function (_React$Component) {
   }, {
     key: 'saveShoppingList',
     value: function saveShoppingList(listName, list) {
+      console.log('SAve shopping list');
       var newList = true;
       var listObject = {
         list: list,
@@ -64598,6 +64595,14 @@ var App = function (_React$Component) {
     key: 'loadList',
     value: function loadList(list) {
       this.setState({ currentShoppingList: Object.assign({}, list) });
+    }
+  }, {
+    key: 'deleteList',
+    value: function deleteList(listToDelete) {
+      var newListsArray = this.state.shoppingLists.filter(function (list) {
+        return list.name !== listToDelete.name;
+      });
+      this.setState({ shoppingLists: newListsArray });
     }
   }, {
     key: 'render',
@@ -64631,7 +64636,8 @@ var App = function (_React$Component) {
                   saveShoppingList: _this2.saveShoppingList,
                   loadList: _this2.loadList,
                   deleteMode: _this2.deleteMode,
-                  createMode: _this2.createMode
+                  createMode: _this2.createMode,
+                  deleteList: _this2.deleteList
                 });
               }
             }),
@@ -65126,11 +65132,11 @@ var NewItemInput = function (_React$Component) {
         { color: this.state.statusColor, raised: true, id: this.state.inputFormat, className: 'item-form' },
         _react2.default.createElement(
           _semanticUiReact.Form,
-          null,
+          { onSubmit: this.handleSubmit },
           _react2.default.createElement(
-            'div',
-            { className: 'field' },
-            _react2.default.createElement(_semanticUiReact.Input, {
+            _semanticUiReact.Form.Field,
+            { required: true },
+            _react2.default.createElement('input', {
               required: true,
               name: 'name',
               onChange: this.handleChange,
@@ -65141,9 +65147,9 @@ var NewItemInput = function (_React$Component) {
             })
           ),
           _react2.default.createElement(
-            'div',
-            { className: 'field' },
-            _react2.default.createElement(_semanticUiReact.Input, {
+            _semanticUiReact.Form.Field,
+            { required: true },
+            _react2.default.createElement('input', {
               required: true,
               label: '$',
               name: 'cost',
@@ -65155,9 +65161,9 @@ var NewItemInput = function (_React$Component) {
             })
           ),
           _react2.default.createElement(
-            'div',
-            { className: 'field' },
-            _react2.default.createElement(_semanticUiReact.Input, {
+            _semanticUiReact.Form.Field,
+            null,
+            _react2.default.createElement('input', {
               name: 'desc',
               onChange: this.handleChange,
               type: 'text',
@@ -65167,13 +65173,13 @@ var NewItemInput = function (_React$Component) {
             })
           ),
           _react2.default.createElement(
-            'button',
-            { onClick: this.handleSubmit, className: 'ui basic green button' },
+            _semanticUiReact.Form.Button,
+            { className: 'item-buttons', basic: true, color: 'green' },
             'Submit'
           ),
           _react2.default.createElement(
-            'button',
-            { onClick: this.clearInput, className: 'ui basic red button' },
+            _semanticUiReact.Form.Button,
+            { className: 'item-buttons', basic: true, color: 'red', onClick: this.clearInput },
             'Clear'
           )
         )
@@ -65248,7 +65254,8 @@ var ListItemPage = function ListItemPage(props) {
         removeFromShoppingList: props.removeFromShoppingList,
         saveShoppingList: props.saveShoppingList,
         savedShoppingLists: props.stateData.shoppingLists,
-        loadList: props.loadList
+        loadList: props.loadList,
+        deleteList: props.deleteList
       })
     )
   );
@@ -65405,7 +65412,7 @@ var LoadShoppingLists = function (_React$Component) {
           'div',
           null,
           this.props.savedShoppingLists.map(function (list) {
-            return _react2.default.createElement(_SavedLists2.default, { key: list.timeStamp, list: list, loadList: _this2.props.loadList });
+            return _react2.default.createElement(_SavedLists2.default, { key: list.timeStamp, list: list, loadList: _this2.props.loadList, deleteList: _this2.props.deleteList });
           })
         );
       } else {
@@ -65475,9 +65482,9 @@ var SaveShoppingList = function (_React$Component) {
 
   _createClass(SaveShoppingList, [{
     key: 'handleSubmit',
-    value: function handleSubmit() {
+    value: function handleSubmit(event) {
+      event.preventDefault();
       this.props.saveShoppingList(this.state.listName, this.props.currentShoppingList.list);
-      this.setState({ listName: this.props.currentShoppingList.name });
     }
   }, {
     key: 'handleChange',
@@ -65495,17 +65502,23 @@ var SaveShoppingList = function (_React$Component) {
       return _react2.default.createElement(
         _semanticUiReact.Segment,
         { inverted: true, color: 'blue' },
-        _react2.default.createElement(_semanticUiReact.Input, {
-          name: 'listName',
-          type: 'text',
-          placeholder: 'List Name',
-          onChange: this.handleChange,
-          value: this.state.listName
-        }),
         _react2.default.createElement(
-          _semanticUiReact.Button,
-          { onClick: this.handleSubmit },
-          'Save List'
+          _semanticUiReact.Form,
+          { onSubmit: this.handleSubmit },
+          _react2.default.createElement(
+            _semanticUiReact.Form.Group,
+            null,
+            _react2.default.createElement('input', {
+              required: true,
+              name: 'listName',
+              action: 'Save',
+              type: 'text',
+              placeholder: 'List Name',
+              onChange: this.handleChange,
+              value: this.state.listName
+            }),
+            _react2.default.createElement(_semanticUiReact.Form.Button, { basic: true, color: 'yellow', content: 'Save' })
+          )
         )
       );
     }
@@ -65540,6 +65553,9 @@ var SavedLists = function SavedLists(props) {
   var loadList = function loadList() {
     props.loadList(props.list);
   };
+  var deleteList = function deleteList() {
+    props.deleteList(props.list);
+  };
 
   return _react2.default.createElement(
     _semanticUiReact.Segment,
@@ -65565,6 +65581,16 @@ var SavedLists = function SavedLists(props) {
           'p',
           null,
           'Use List'
+        )
+      ),
+      _react2.default.createElement(
+        'div',
+        { className: 'saved-list-button' },
+        _react2.default.createElement(_semanticUiReact.Icon, { onClick: deleteList, size: 'big', name: 'minus circle' }),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Delete List'
         )
       )
     )
@@ -65734,7 +65760,10 @@ var ShoppingListContainer = function ShoppingListContainer(props) {
       removeFromShoppingList: props.removeFromShoppingList,
       saveShoppingList: props.saveShoppingList
     }),
-    _react2.default.createElement(_LoadShoppingLists2.default, { loadList: props.loadList, savedShoppingLists: props.savedShoppingLists })
+    _react2.default.createElement(_LoadShoppingLists2.default, {
+      loadList: props.loadList, savedShoppingLists: props.savedShoppingLists,
+      deleteList: props.deleteList
+    })
   );
 };
 

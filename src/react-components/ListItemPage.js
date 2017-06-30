@@ -33,6 +33,7 @@ const ListItemPage = (props) => {
           saveShoppingList={props.saveShoppingList}
           savedShoppingLists={props.stateData.shoppingLists}
           loadList={props.loadList}
+          deleteList={props.deleteList}
           />
       </Grid.Column>
     </Grid>

@@ -60,9 +60,9 @@ class NewItemInput extends React.Component {
   render(){
     return(
       <Segment color={this.state.statusColor} raised id={this.state.inputFormat} className='item-form'>
-        <Form>
-          <div className="field">
-            <Input
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Field required>
+            <input
               required
               name="name"
               onChange={this.handleChange}
@@ -71,9 +71,9 @@ class NewItemInput extends React.Component {
               value={this.state.item.name}
               id={this.state.inputFormat}
             />
-          </div>
-          <div className="field">
-            <Input
+          </Form.Field>
+          <Form.Field required>
+            <input
               required
               label="$"
               name="cost"
@@ -83,9 +83,9 @@ class NewItemInput extends React.Component {
               value={this.state.item.cost}
               id={this.state.inputFormat}
             />
-          </div>
-          <div className="field">
-            <Input
+          </Form.Field>
+          <Form.Field>
+            <input
               name="desc"
               onChange={this.handleChange}
               type="text"
@@ -93,9 +93,9 @@ class NewItemInput extends React.Component {
               value={this.state.item.desc}
               id={this.state.inputFormat}
             />
-          </div>
-          <button onClick={this.handleSubmit} className="ui basic green button">Submit</button>
-          <button onClick={this.clearInput} className="ui basic red button">Clear</button>
+          </Form.Field>
+          <Form.Button className='item-buttons' basic color={'green'}>Submit</Form.Button>
+          <Form.Button className='item-buttons' basic color={'red'} onClick={this.clearInput}>Clear</Form.Button>
         </Form>
       </Segment>
     );

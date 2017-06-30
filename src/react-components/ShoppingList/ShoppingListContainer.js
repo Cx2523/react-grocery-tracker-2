@@ -12,7 +12,10 @@ const ShoppingListContainer = (props) => {
         removeFromShoppingList={props.removeFromShoppingList}
         saveShoppingList={props.saveShoppingList}
         />
-        <LoadShoppingLists loadList={props.loadList} savedShoppingLists={props.savedShoppingLists}/>
+        <LoadShoppingLists
+          loadList={props.loadList} savedShoppingLists={props.savedShoppingLists}
+          deleteList={props.deleteList}
+        />
     </div>
 
   );
