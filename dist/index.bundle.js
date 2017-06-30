@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "643222151ea0fcbc4f35"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "df0ab00a0508a99d638e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -64436,10 +64436,10 @@ var App = function (_React$Component) {
       if (Object.keys(localStorage).some(function (key) {
         return key === 'reactGroceryTrackerData';
       })) {
+        this.state.savedDataExists = true;
         console.log("A saved state exists");
         var savedState = JSON.parse(localStorage.reactGroceryTrackerData);
         this.setState(savedState);
-        this.savedDataExists = true;
       } else {
         console.log('no saved data');
       }

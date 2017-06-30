@@ -54,10 +54,11 @@ class App extends React.Component {
 
   componentWillMount(){
     if(Object.keys(localStorage).some((key) => key === 'reactGroceryTrackerData')){
+      this.state.savedDataExists = true;
       console.log("A saved state exists");
       const savedState = JSON.parse(localStorage.reactGroceryTrackerData);
       this.setState(savedState);
-      this.savedDataExists = true;
+
     }
     else{
       console.log('no saved data');
