@@ -9,6 +9,7 @@ import ListItemPage from './ListItemPage.js';
 import StatsPage from './StatsPage.js';
 import AboutPage from './AboutPage.js';
 import Navbar from './Navbar.js';
+import InitializeSampleDataModal from './InitializeSampleDataModal.js';
 
 class App extends React.Component {
   constructor(){
@@ -31,7 +32,8 @@ class App extends React.Component {
       },
       deleting: false,
       editing: false,
-      creating: false
+      creating: false,
+      savedDataExists: false
     };
     this.createNewItem = this.createNewItem.bind(this);
     this.getItemById = this.getItemById.bind(this);
@@ -47,13 +49,18 @@ class App extends React.Component {
     this.deleteMode = this.deleteMode.bind(this);
     this.createMode = this.createMode.bind(this);
     this.deleteList = this.deleteList.bind(this);
+    this.loadSampleData = this.loadSampleData.bind(this);
   }
 
-  componentDidMount(){
+  componentWillMount(){
     if(Object.keys(localStorage).some((key) => key === 'reactGroceryTrackerData')){
       console.log("A saved state exists");
       const savedState = JSON.parse(localStorage.reactGroceryTrackerData);
       this.setState(savedState);
+      this.savedDataExists = true;
+    }
+    else{
+      console.log('no saved data');
     }
   }
 
@@ -208,11 +215,20 @@ class App extends React.Component {
     this.setState({shoppingLists: newListsArray});
   }
 
+  loadSampleData(sampleDataState){
+      this.setState(sampleDataState);
+  }
+
   render(){
+    let sampleDataModal = null;
+    if (!this.state.savedDataExists){
+      sampleDataModal = <InitializeSampleDataModal loadSampleData={this.loadSampleData}/>
+    }
     return(
       <Router>
         <div>
           <Navbar />
+          {sampleDataModal}
           <div>
             <Route exact path="/"
               render={() => <ListItemPage

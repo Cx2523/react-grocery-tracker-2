@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0f1a76dcd50e2857a234"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "643222151ea0fcbc4f35"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -64371,6 +64371,10 @@ var _Navbar = __webpack_require__("./src/react-components/Navbar.js");
 
 var _Navbar2 = _interopRequireDefault(_Navbar);
 
+var _InitializeSampleDataModal = __webpack_require__("./src/react-components/InitializeSampleDataModal.js");
+
+var _InitializeSampleDataModal2 = _interopRequireDefault(_InitializeSampleDataModal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -64405,7 +64409,8 @@ var App = function (_React$Component) {
       },
       deleting: false,
       editing: false,
-      creating: false
+      creating: false,
+      savedDataExists: false
     };
     _this.createNewItem = _this.createNewItem.bind(_this);
     _this.getItemById = _this.getItemById.bind(_this);
@@ -64421,18 +64426,22 @@ var App = function (_React$Component) {
     _this.deleteMode = _this.deleteMode.bind(_this);
     _this.createMode = _this.createMode.bind(_this);
     _this.deleteList = _this.deleteList.bind(_this);
+    _this.loadSampleData = _this.loadSampleData.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
       if (Object.keys(localStorage).some(function (key) {
         return key === 'reactGroceryTrackerData';
       })) {
         console.log("A saved state exists");
         var savedState = JSON.parse(localStorage.reactGroceryTrackerData);
         this.setState(savedState);
+        this.savedDataExists = true;
+      } else {
+        console.log('no saved data');
       }
     }
   }, {
@@ -64605,10 +64614,19 @@ var App = function (_React$Component) {
       this.setState({ shoppingLists: newListsArray });
     }
   }, {
+    key: 'loadSampleData',
+    value: function loadSampleData(sampleDataState) {
+      this.setState(sampleDataState);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
+      var sampleDataModal = null;
+      if (!this.state.savedDataExists) {
+        sampleDataModal = _react2.default.createElement(_InitializeSampleDataModal2.default, { loadSampleData: this.loadSampleData });
+      }
       return _react2.default.createElement(
         _reactRouterDom.BrowserRouter,
         null,
@@ -64616,6 +64634,7 @@ var App = function (_React$Component) {
           'div',
           null,
           _react2.default.createElement(_Navbar2.default, null),
+          sampleDataModal,
           _react2.default.createElement(
             'div',
             null,
@@ -64653,6 +64672,122 @@ var App = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = App;
+
+/***/ }),
+
+/***/ "./src/react-components/InitializeSampleDataModal.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__("./node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _semanticUiReact = __webpack_require__("./node_modules/semantic-ui-react/dist/es/index.js");
+
+var _sampleData = __webpack_require__("./src/react-components/sampleData.js");
+
+var _sampleData2 = _interopRequireDefault(_sampleData);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var InitializeSampleDataModal = function (_React$Component) {
+  _inherits(InitializeSampleDataModal, _React$Component);
+
+  function InitializeSampleDataModal() {
+    _classCallCheck(this, InitializeSampleDataModal);
+
+    var _this = _possibleConstructorReturn(this, (InitializeSampleDataModal.__proto__ || Object.getPrototypeOf(InitializeSampleDataModal)).call(this));
+
+    _this.state = {
+      modalOpen: true
+    };
+    _this.openModal = _this.openModal.bind(_this);
+    _this.closeModal = _this.closeModal.bind(_this);
+    _this.loadData = _this.loadData.bind(_this);
+    return _this;
+  }
+
+  _createClass(InitializeSampleDataModal, [{
+    key: 'loadData',
+    value: function loadData() {
+      var sampleDataState = _sampleData2.default;
+      this.props.loadSampleData(sampleDataState);
+      this.closeModal();
+    }
+  }, {
+    key: 'openModal',
+    value: function openModal() {
+      this.setState({ modalOpen: true });
+    }
+  }, {
+    key: 'closeModal',
+    value: function closeModal() {
+      this.setState({ modalOpen: false });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        _semanticUiReact.Modal,
+        {
+          basic: true,
+          size: 'small',
+          open: this.state.modalOpen
+        },
+        _react2.default.createElement(
+          _semanticUiReact.Modal.Content,
+          null,
+          _react2.default.createElement(
+            _semanticUiReact.Header,
+            { as: 'h1', color: 'red' },
+            'There is currently no saved data for this app. Would you like to load some example data to get started?'
+          )
+        ),
+        _react2.default.createElement(
+          _semanticUiReact.Modal.Actions,
+          null,
+          _react2.default.createElement(
+            _semanticUiReact.Button,
+            {
+              basic: true,
+              color: 'red',
+              onClick: this.loadData
+            },
+            'Yes'
+          ),
+          _react2.default.createElement(
+            _semanticUiReact.Button,
+            {
+              basic: true,
+              color: 'blue',
+              onClick: this.closeModal
+            },
+            'Cancel'
+          )
+        )
+      );
+    }
+  }]);
+
+  return InitializeSampleDataModal;
+}(_react2.default.Component);
+
+exports.default = InitializeSampleDataModal;
 
 /***/ }),
 
@@ -65985,6 +66120,72 @@ var StatsPage = function StatsPage() {
 };
 
 exports.default = StatsPage;
+
+/***/ }),
+
+/***/ "./src/react-components/sampleData.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = {
+  items: [{
+    name: 'Item (Click Me)',
+    cost: '12',
+    desc: 'A saved item that can be added to the shopping list',
+    id: '1'
+  }, {
+    name: 'Thing 2',
+    cost: '2',
+    desc: 'Another thing',
+    id: '2'
+  }, {
+    name: 'Stuff',
+    cost: '6',
+    desc: '',
+    id: '3'
+  }],
+  shoppingLists: [],
+  stats: {},
+  idCounter: 4,
+  currentItem: {
+    name: 'Item (Click Me)',
+    cost: '12',
+    desc: 'A saved item that can be added to the shopping list',
+    id: '1'
+  },
+  currentShoppingList: {
+    list: [{
+      name: 'Item (Click Me)',
+      cost: '12',
+      desc: 'A saved item that can be added to the shopping list',
+      id: '1',
+      quantity: 2
+    }, {
+      name: 'Thing',
+      cost: '2',
+      desc: 'Another thing',
+      id: '2',
+      quantity: 6
+    }, {
+      name: 'Stuff',
+      cost: '6',
+      desc: '',
+      id: '3',
+      quantity: 1
+    }],
+    timeStamp: '',
+    name: 'My Shopping List'
+  },
+  deleting: false,
+  editing: false,
+  creating: false,
+  savedDataExists: true
+};
 
 /***/ }),
 
