@@ -57,7 +57,7 @@ class App extends React.Component {
 
   componentWillMount(){
     if(Object.keys(localStorage).some((key) => key === 'reactGroceryTrackerData')){
-      this.state. savedDataExists = true;
+      this.state.savedDataExists = true;
       console.log("A saved state exists");
       const savedState = JSON.parse(localStorage.reactGroceryTrackerData);
       this.setState(savedState);
@@ -250,10 +250,12 @@ class App extends React.Component {
                 deleteList = {this.deleteList}
                 />}
               />
-            <Route path="/stats" component={StatsPage} />
+            <Route path="/stats" render={() => {
+              return <StatsPage items={this.state.items} shoppingLists={this.state.shoppingLists}/>
+            }}/>
             <Route path="/about" render={() => {
               return <AboutPage history={history}/>
-              } } />
+            }}/>
           </div>
         </div>
       </Router>

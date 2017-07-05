@@ -46,7 +46,7 @@ class DeleteDataModal extends React.Component{
         open={this.state.modalOpen}
       >
         <Modal.Content>
-          <Header as='h1' color={'red'}>Permanently delete saved data for this app?</Header>
+          <Header as='h1' color={'red'}>Permanently delete saved data and reset this app?</Header>
         </Modal.Content>
         <Modal.Actions>
           <Button
