@@ -5,6 +5,11 @@ body {
   padding: 0;
   margin: 0; }
 
+.app-container {
+  position: absolute;
+  width: 100%;
+  height: 95%; }
+
 .item-card {
   display: flex;
   justify-content: space-between;
@@ -61,12 +66,24 @@ p {
   display: inline;
   margin-left: 3%; }
 
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 100%; }
+  .chart-container svg {
+    position: absolute;
+    width: 95%;
+    height: 90%; }
+
 .datacell {
   transition: background-color .1s, color .1s, font-size .1s;
   padding: 1em; }
 
 .ui.padded.table td {
   padding: 0; }
+
+.ui.grid {
+  height: 100%; }
 
 /*the following modifies semantic-ui-react's default accordion behavavior to make the transition smooth instead of instant*/
 .ui.accordion .accordion .title ~ .content, .ui.accordion .title ~ .content {

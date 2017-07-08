@@ -229,7 +229,7 @@ class App extends React.Component {
         <div>
           <Navbar />
           {sampleDataModal}
-          <div>
+          <div className='app-container'>
             <Route exact path="/"
               render={() => <ListItemPage
                 stateData={this.state}

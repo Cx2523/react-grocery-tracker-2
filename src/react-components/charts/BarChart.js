@@ -1,5 +1,6 @@
 import React from 'react';
 import * as d3 from 'd3';
+import {Segment} from 'semantic-ui-react';
 
 class BarChart extends React.Component{
     constructor(){
@@ -12,20 +13,26 @@ class BarChart extends React.Component{
     }
 
     createBarChart(){
+      let barVerticalPadding = 5;
+      let svgHeightString = d3.select(this.node).style('height');
+      let svgHeight = parseInt(svgHeightString.substr(0, svgHeightString.length - 2));
+      let barHeight = svgHeight / this.props.items.length;
+
+
       d3.select(this.node)
         .selectAll('rect')
           .data(this.props.items)
         .enter().append('rect')
           .attr('width', d => d.cost * 100)
-          .attr('height', 50)
-          .attr('y', d => d.id * 55);
+          .attr('height', barHeight - barVerticalPadding)
+          .attr('y', (d, i) => i * barHeight);
     }
-
-
 
     render(){
       return (
-        <svg ref={node => this.node = node} height={1000} width={1000}></svg>
+        <Segment raised className='chart-container'>
+          <svg ref={node => this.node = node}></svg>
+        </Segment>
       );
   }
 }

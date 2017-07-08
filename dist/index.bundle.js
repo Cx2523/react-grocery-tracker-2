@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c2ddc2ffe4e0829cbd2c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "91646100159ffd7ed296"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -81519,7 +81519,7 @@ var App = function (_React$Component) {
           sampleDataModal,
           _react2.default.createElement(
             'div',
-            null,
+            { className: 'app-container' },
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/',
               render: function render() {
                 return _react2.default.createElement(_ListItemPage2.default, {
@@ -83004,9 +83004,15 @@ var _d = __webpack_require__("./node_modules/d3/build/d3.js");
 
 var d3 = _interopRequireWildcard(_d);
 
+var _semanticUiReact = __webpack_require__("./node_modules/semantic-ui-react/dist/es/index.js");
+
 var _BarChart = __webpack_require__("./src/react-components/charts/BarChart.js");
 
 var _BarChart2 = _interopRequireDefault(_BarChart);
+
+var _BubbleChart = __webpack_require__("./src/react-components/charts/BubbleChart.js");
+
+var _BubbleChart2 = _interopRequireDefault(_BubbleChart);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -83014,14 +83020,36 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var StatsPage = function StatsPage(props) {
   return _react2.default.createElement(
-    'div',
-    null,
+    _semanticUiReact.Grid,
+    { columns: 2, height: true, divided: true, padded: true },
     _react2.default.createElement(
-      'h1',
+      _semanticUiReact.Grid.Row,
       null,
-      'Stats Page'
+      _react2.default.createElement(
+        _semanticUiReact.Grid.Column,
+        null,
+        _react2.default.createElement(_BarChart2.default, { items: props.items })
+      ),
+      _react2.default.createElement(
+        _semanticUiReact.Grid.Column,
+        null,
+        _react2.default.createElement(_BubbleChart2.default, { items: props.items })
+      )
     ),
-    _react2.default.createElement(_BarChart2.default, { items: props.items })
+    _react2.default.createElement(
+      _semanticUiReact.Grid.Row,
+      null,
+      _react2.default.createElement(
+        _semanticUiReact.Grid.Column,
+        null,
+        _react2.default.createElement(_BubbleChart2.default, { items: props.items })
+      ),
+      _react2.default.createElement(
+        _semanticUiReact.Grid.Column,
+        null,
+        _react2.default.createElement(_BarChart2.default, { items: props.items })
+      )
+    )
   );
 };
 
@@ -83048,6 +83076,8 @@ var _react2 = _interopRequireDefault(_react);
 var _d = __webpack_require__("./node_modules/d3/build/d3.js");
 
 var d3 = _interopRequireWildcard(_d);
+
+var _semanticUiReact = __webpack_require__("./node_modules/semantic-ui-react/dist/es/index.js");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -83079,10 +83109,15 @@ var BarChart = function (_React$Component) {
   }, {
     key: 'createBarChart',
     value: function createBarChart() {
+      var barVerticalPadding = 5;
+      var svgHeightString = d3.select(this.node).style('height');
+      var svgHeight = parseInt(svgHeightString.substr(0, svgHeightString.length - 2));
+      var barHeight = svgHeight / this.props.items.length;
+
       d3.select(this.node).selectAll('rect').data(this.props.items).enter().append('rect').attr('width', function (d) {
         return d.cost * 100;
-      }).attr('height', 50).attr('y', function (d) {
-        return d.id * 55;
+      }).attr('height', barHeight - barVerticalPadding).attr('y', function (d, i) {
+        return i * barHeight;
       });
     }
   }, {
@@ -83090,9 +83125,13 @@ var BarChart = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
-      return _react2.default.createElement('svg', { ref: function ref(node) {
-          return _this2.node = node;
-        }, height: 1000, width: 1000 });
+      return _react2.default.createElement(
+        _semanticUiReact.Segment,
+        { raised: true, className: 'chart-container' },
+        _react2.default.createElement('svg', { ref: function ref(node) {
+            return _this2.node = node;
+          } })
+      );
     }
   }]);
 
@@ -83100,6 +83139,112 @@ var BarChart = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = BarChart;
+
+/***/ }),
+
+/***/ "./src/react-components/charts/BubbleChart.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__("./node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _d = __webpack_require__("./node_modules/d3/build/d3.js");
+
+var d3 = _interopRequireWildcard(_d);
+
+var _semanticUiReact = __webpack_require__("./node_modules/semantic-ui-react/dist/es/index.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BubbleChart = function (_React$Component) {
+  _inherits(BubbleChart, _React$Component);
+
+  function BubbleChart() {
+    _classCallCheck(this, BubbleChart);
+
+    var _this = _possibleConstructorReturn(this, (BubbleChart.__proto__ || Object.getPrototypeOf(BubbleChart)).call(this));
+
+    _this.createBubbleChart = _this.createBubbleChart.bind(_this);
+    return _this;
+  }
+
+  _createClass(BubbleChart, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.createBubbleChart();
+    }
+  }, {
+    key: 'createBubbleChart',
+    value: function createBubbleChart() {
+      var heightString = d3.select(this.node).style('height');
+      var height = parseInt(heightString.substr(0, heightString.length - 2));
+
+      var maxDiameter = height;
+      var color = d3.scaleOrdinal(d3.schemeCategory20);
+      var hierarchy = d3.hierarchy({ children: this.props.items });
+      hierarchy.sum(function (d) {
+        return d.cost;
+      });
+
+      var bubbleLayout = d3.pack().size([maxDiameter, maxDiameter]).padding(1.5);
+
+      var bubbleNodes = bubbleLayout(hierarchy);
+
+      d3.select(this.node).attr("class", "bubbleLayout");
+
+      var bubbles = d3.select(this.node).append("g").selectAll(".bubbleLayout").data(bubbleNodes.children).enter();
+
+      bubbles.append("circle").attr('r', function (d) {
+        return d.r;
+      }).attr('transform', function (d) {
+        return 'translate(' + d.x + ',' + d.y + ')';
+      }).attr('fill', function (d) {
+        return color(d.r);
+      });
+
+      bubbles.append("text").attr('transform', function (d) {
+        return 'translate(' + d.x + ',' + d.y + ')';
+      }).attr('fill', 'black').attr('text-anchor', 'middle').text(function (d) {
+        return d.data.name;
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        _semanticUiReact.Segment,
+        { raised: true, className: 'chart-container' },
+        _react2.default.createElement('svg', { ref: function ref(node) {
+            return _this2.node = node;
+          } })
+      );
+    }
+  }]);
+
+  return BubbleChart;
+}(_react2.default.Component);
+
+exports.default = BubbleChart;
 
 /***/ }),
 
