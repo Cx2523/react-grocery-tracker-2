@@ -7,21 +7,24 @@ import BubbleChart from './charts/BubbleChart.js';
 
 const StatsPage = (props) => {
   return (
-    <Grid columns={2} height divided padded>
+    <Grid columns={3} height divided padded>
       <Grid.Row>
-        <Grid.Column>
+        <Grid.Column width={4}>
           <BarChart items={props.items} />
         </Grid.Column>
-        <Grid.Column>
+        <Grid.Column width={8}>
           <BubbleChart items={props.items} />
+        </Grid.Column>
+        <Grid.Column width={4}>
+          <BarChart items={props.items} />
         </Grid.Column>
       </Grid.Row>
 
       <Grid.Row>
-        <Grid.Column>
+        <Grid.Column width={8}>
           <BubbleChart items={props.items} />
         </Grid.Column>
-        <Grid.Column>
+        <Grid.Column width={8}>
           <BarChart items={props.items} />
         </Grid.Column>
       </Grid.Row>

@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "91646100159ffd7ed296"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "89d053d997b8d8e27323"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -83021,19 +83021,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var StatsPage = function StatsPage(props) {
   return _react2.default.createElement(
     _semanticUiReact.Grid,
-    { columns: 2, height: true, divided: true, padded: true },
+    { columns: 3, height: true, divided: true, padded: true },
     _react2.default.createElement(
       _semanticUiReact.Grid.Row,
       null,
       _react2.default.createElement(
         _semanticUiReact.Grid.Column,
-        null,
+        { width: 4 },
         _react2.default.createElement(_BarChart2.default, { items: props.items })
       ),
       _react2.default.createElement(
         _semanticUiReact.Grid.Column,
-        null,
+        { width: 8 },
         _react2.default.createElement(_BubbleChart2.default, { items: props.items })
+      ),
+      _react2.default.createElement(
+        _semanticUiReact.Grid.Column,
+        { width: 4 },
+        _react2.default.createElement(_BarChart2.default, { items: props.items })
       )
     ),
     _react2.default.createElement(
@@ -83041,12 +83046,12 @@ var StatsPage = function StatsPage(props) {
       null,
       _react2.default.createElement(
         _semanticUiReact.Grid.Column,
-        null,
+        { width: 8 },
         _react2.default.createElement(_BubbleChart2.default, { items: props.items })
       ),
       _react2.default.createElement(
         _semanticUiReact.Grid.Column,
-        null,
+        { width: 8 },
         _react2.default.createElement(_BarChart2.default, { items: props.items })
       )
     )
@@ -83107,18 +83112,39 @@ var BarChart = function (_React$Component) {
       this.createBarChart();
     }
   }, {
+    key: 'getSvgDimensions',
+    value: function getSvgDimensions() {
+      var heightString = d3.select(this.node).style('height');
+      var height = parseInt(heightString.substr(0, heightString.length - 2));
+      var widthString = d3.select(this.node).style('width');
+      var width = parseInt(widthString.substr(0, widthString.length - 2));
+      return {
+        width: width,
+        height: height
+      };
+    }
+  }, {
     key: 'createBarChart',
     value: function createBarChart() {
       var barVerticalPadding = 5;
-      var svgHeightString = d3.select(this.node).style('height');
-      var svgHeight = parseInt(svgHeightString.substr(0, svgHeightString.length - 2));
+      var svgHeight = this.getSvgDimensions().height;
       var barHeight = svgHeight / this.props.items.length;
+      var color = d3.scaleOrdinal(d3.schemeCategory20);
+      var maxCost = d3.max(this.props.items, function (d) {
+        return +d.cost;
+      });
+
+      var widthScale = d3.scaleLinear().domain([0, maxCost]).range([0, this.getSvgDimensions().width]);
 
       d3.select(this.node).selectAll('rect').data(this.props.items).enter().append('rect').attr('width', function (d) {
-        return d.cost * 100;
+        return widthScale(d.cost);
       }).attr('height', barHeight - barVerticalPadding).attr('y', function (d, i) {
         return i * barHeight;
+      }).attr('fill', function (d) {
+        return color(d.cost);
       });
+
+      d3.select(this.node).append('g').attr("transform", "translate(0," + svgHeight + ")").call(d3.axisBottom(widthScale));
     }
   }, {
     key: 'render',
@@ -83192,12 +83218,21 @@ var BubbleChart = function (_React$Component) {
       this.createBubbleChart();
     }
   }, {
-    key: 'createBubbleChart',
-    value: function createBubbleChart() {
+    key: 'getSvgDimensions',
+    value: function getSvgDimensions() {
       var heightString = d3.select(this.node).style('height');
       var height = parseInt(heightString.substr(0, heightString.length - 2));
-
-      var maxDiameter = height;
+      var widthString = d3.select(this.node).style('width');
+      var width = parseInt(widthString.substr(0, widthString.length - 2));
+      return {
+        width: width,
+        height: height
+      };
+    }
+  }, {
+    key: 'createBubbleChart',
+    value: function createBubbleChart() {
+      var maxDiameter = this.getSvgDimensions().height;
       var color = d3.scaleOrdinal(d3.schemeCategory20);
       var hierarchy = d3.hierarchy({ children: this.props.items });
       hierarchy.sum(function (d) {
