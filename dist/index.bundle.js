@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "89d053d997b8d8e27323"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0066846ab1aeda834258"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -83102,13 +83102,22 @@ var BarChart = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (BarChart.__proto__ || Object.getPrototypeOf(BarChart)).call(this));
 
+    _this.state = {
+      sortMethod: 'List'
+    };
     _this.createBarChart = _this.createBarChart.bind(_this);
+    _this.handleSelect = _this.handleSelect.bind(_this);
     return _this;
   }
 
   _createClass(BarChart, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      this.createBarChart();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
       this.createBarChart();
     }
   }, {
@@ -83124,27 +83133,79 @@ var BarChart = function (_React$Component) {
       };
     }
   }, {
+    key: 'sortData',
+    value: function sortData(order) {
+      var arrayCopy = this.props.items.map(function (item) {
+        return Object.assign({}, item);
+      });
+      var sortedArray = void 0;
+      switch (order) {
+        case 'highToLow':
+          sortedArray = arrayCopy.sort(function (a, b) {
+            return b.cost - a.cost;
+          });
+          break;
+        case 'lowToHigh':
+          sortedArray = arrayCopy.sort(function (a, b) {
+            return a.cost - b.cost;
+          });
+          break;
+        default:
+          sortedArray = arrayCopy;
+      }
+      return sortedArray;
+    }
+  }, {
     key: 'createBarChart',
     value: function createBarChart() {
-      var barVerticalPadding = 5;
+      var sortedData = this.sortData(this.state.sortMethod);
+      //width parameters
+      var barWidthPadding = 0.03;
+      var svgWidth = this.getSvgDimensions().width;
+      //height parameters
       var svgHeight = this.getSvgDimensions().height;
-      var barHeight = svgHeight / this.props.items.length;
-      var color = d3.scaleOrdinal(d3.schemeCategory20);
-      var maxCost = d3.max(this.props.items, function (d) {
+      var axisOffset = 0.1 * svgHeight;
+      var barHeight = (svgHeight - axisOffset) / sortedData.length;
+      var barHeightPadding = 0.1 * barHeight;
+      //get maxCost for width dimensions
+      var maxCost = d3.max(sortedData, function (d) {
         return +d.cost;
       });
+      //scales
+      var color = d3.scaleOrdinal(d3.schemeCategory20);
+      var widthScale = d3.scaleLinear().domain([0, maxCost]).range([0, svgWidth - svgWidth * barWidthPadding]);
 
-      var widthScale = d3.scaleLinear().domain([0, maxCost]).range([0, this.getSvgDimensions().width]);
-
-      d3.select(this.node).selectAll('rect').data(this.props.items).enter().append('rect').attr('width', function (d) {
+      d3.select(this.node).selectAll('rect').data(sortedData).attr('width', function (d) {
         return widthScale(d.cost);
-      }).attr('height', barHeight - barVerticalPadding).attr('y', function (d, i) {
+      }).attr('height', barHeight - barHeightPadding).attr('y', function (d, i) {
+        return i * barHeight;
+      }).attr('fill', function (d) {
+        return color(d.cost);
+      }).enter().append('rect').attr('width', function (d) {
+        return widthScale(d.cost);
+      }).attr('height', barHeight - barHeightPadding).attr('y', function (d, i) {
         return i * barHeight;
       }).attr('fill', function (d) {
         return color(d.cost);
       });
 
-      d3.select(this.node).append('g').attr("transform", "translate(0," + svgHeight + ")").call(d3.axisBottom(widthScale));
+      d3.select(this.node).selectAll('text').data(sortedData).attr('fill', 'black').attr('text-align', 'center').attr("transform", function (d, i) {
+        return 'translate(' + widthScale(d.cost) / 2 + ', ' + (i * barHeight + barHeight / 2 + 3) + ')';
+      }).text(function (d) {
+        return d.name;
+      }).enter().append('text').attr('fill', 'black').attr('text-align', 'center').attr("transform", function (d, i) {
+        return 'translate(' + widthScale(d.cost) / 2 + ', ' + (i * barHeight + barHeight / 2 + 3) + ')';
+      }).text(function (d) {
+        return d.name;
+      });
+
+      d3.select(this.node).selectAll('g').data([1]) //'trick' d3 into creating 1 copy of the axis only in the entry phase
+      .enter().append('g').attr("transform", 'translate(0, ' + (svgHeight - axisOffset) + ')').call(d3.axisBottom(widthScale));
+    }
+  }, {
+    key: 'handleSelect',
+    value: function handleSelect(event, data) {
+      this.setState({ sortMethod: data.value });
     }
   }, {
     key: 'render',
@@ -83154,6 +83215,16 @@ var BarChart = function (_React$Component) {
       return _react2.default.createElement(
         _semanticUiReact.Segment,
         { raised: true, className: 'chart-container' },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Saved Items'
+        ),
+        _react2.default.createElement(_semanticUiReact.Select, { id: 'sort-bar-chart',
+          compact: true,
+          placeholder: 'Sort',
+          options: [{ key: 'list', value: 'list', text: 'List' }, { key: 'highToLow', value: 'highToLow', text: 'High to Low' }, { key: 'lowToHigh', value: 'lowToHigh', text: 'Low to High' }],
+          onChange: this.handleSelect }),
         _react2.default.createElement('svg', { ref: function ref(node) {
             return _this2.node = node;
           } })

@@ -104,7 +104,6 @@ class BarChart extends React.Component{
       this.setState({sortMethod: data.value});
     }
 
-
     render(){
       return (
         <Segment raised className='chart-container'>
