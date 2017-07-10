@@ -24,28 +24,34 @@ class BarChart extends React.Component{
     }
 
     createBarChart(){
-      let barVerticalPadding = 5;
+      //width parameters
+      let barWidthPadding = 0.05;
+      let svgWidth = this.getSvgDimensions().width;
+      //height parameters
       let svgHeight = this.getSvgDimensions().height;
-      let barHeight = svgHeight / this.props.items.length;
-      let color = d3.scaleOrdinal(d3.schemeCategory20);
+      let axisOffset = 0.1 * svgHeight;
+      let barHeight = (svgHeight - axisOffset) / this.props.items.length;
+      let barHeightPadding = 0.1 * barHeight;
+      //get maxCost for width dimensions
       let maxCost = d3.max(this.props.items, d => +d.cost);
-
+      //scales
+      let color = d3.scaleOrdinal(d3.schemeCategory20);
       let widthScale = d3.scaleLinear()
         .domain([0, maxCost])
-        .range([0, this.getSvgDimensions().width]);
+        .range([0, svgWidth - svgWidth * barWidthPadding ]);
 
       d3.select(this.node)
         .selectAll('rect')
           .data(this.props.items)
         .enter().append('rect')
           .attr('width', d => widthScale(d.cost))
-          .attr('height', barHeight - barVerticalPadding)
+          .attr('height', barHeight - barHeightPadding)
           .attr('y', (d, i) => i * barHeight)
           .attr('fill', d => color(d.cost));
 
       d3.select(this.node)
         .append('g')
-        .attr("transform", "translate(0," + svgHeight + ")")
+        .attr("transform", "translate(0," + (svgHeight - axisOffset / 2) + ")")
         .call(d3.axisBottom(widthScale));
 
     }
