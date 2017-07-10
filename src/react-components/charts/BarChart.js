@@ -70,7 +70,6 @@ class BarChart extends React.Component{
           .attr('width', d => widthScale(d.cost))
           .attr('height', barHeight - barHeightPadding)
           .attr('y', (d, i) => i * barHeight)
-          .attr('fill', d => color(d.cost))
         .enter().append('rect')
           .attr('width', d => widthScale(d.cost))
           .attr('height', barHeight - barHeightPadding)
