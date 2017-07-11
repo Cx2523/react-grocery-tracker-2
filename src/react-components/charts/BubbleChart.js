@@ -52,7 +52,6 @@ class BubbleChart extends React.Component{
         .attr('fill', 'black')
         .attr('text-anchor', 'middle')
         .text(d => d.data.name);
-
     }
 
     render(){
